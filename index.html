@@ -1,48 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
   <title>Controle de Estoque - Marília de Dirceu</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
+
+    html,
     body{
-      background: linear-gradient(to right, #f3f4f6, #e9d5ff);
+      overflow-x:hidden;
+    }
+
+    body{
+      background: linear-gradient(to right,#f5f3ff,#ede9fe,#f3f4f6);
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     .scroll-custom::-webkit-scrollbar{
-      width: 8px;
-      height: 8px;
+      width:8px;
+      height:8px;
     }
 
     .scroll-custom::-webkit-scrollbar-thumb{
-      background: #7e22ce;
-      border-radius: 999px;
+      background:#7e22ce;
+      border-radius:999px;
     }
 
     .fade{
-      animation: fade .3s ease;
+      animation:fade .3s ease;
     }
 
     @keyframes fade{
+
       from{
         opacity:0;
-        transform: translateY(10px);
+        transform:translateY(10px);
       }
+
       to{
         opacity:1;
-        transform: translateY(0px);
+        transform:translateY(0);
       }
+
     }
+
+    .glass{
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.75);
+    }
+
+    @media(max-width:768px){
+
+      table{
+        min-width:1200px;
+      }
+
+    }
+
   </style>
+
 </head>
 
 <body class="min-h-screen">
 
   <!-- LOGIN -->
+
   <div id="loginTela"
        class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
 
@@ -50,11 +80,12 @@
 
       <div class="flex justify-center mb-5">
 
-        <div class="w-28 h-28 rounded-full border-4 border-purple-600 overflow-hidden shadow-lg bg-gray-100">
+        <div class="w-32 h-32 rounded-full border-4 border-purple-700 overflow-hidden shadow-2xl bg-gray-100">
 
-          <!-- COLOQUE SUA LOGO -->
+          <!-- TROQUE SUA LOGO -->
+
           <img
-            src="https://via.placeholder.com/300x300.png?text=LOGO"
+            src="https://via.placeholder.com/400x400.png?text=LOGO"
             class="w-full h-full object-cover"
           >
 
@@ -62,11 +93,11 @@
 
       </div>
 
-      <h1 class="text-3xl font-bold text-center text-purple-700">
+      <h1 class="text-4xl font-black text-center text-purple-700">
         Controle de Estoque
       </h1>
 
-      <p class="text-center text-gray-500 mt-2">
+      <p class="text-center text-gray-500 mt-2 text-lg">
         Marília de Dirceu
       </p>
 
@@ -75,52 +106,55 @@
         <input
           type="password"
           id="senha"
-          placeholder="Digite a senha"
-          class="w-full border-2 border-purple-300 rounded-2xl px-4 py-4 outline-none focus:border-purple-700"
+          placeholder="Digite sua senha"
+          class="w-full border-2 border-purple-300 rounded-2xl px-5 py-4 outline-none focus:border-purple-700"
         >
 
         <button
           onclick="verificarSenha()"
-          class="w-full mt-4 bg-purple-700 hover:bg-purple-800 transition text-white py-4 rounded-2xl font-bold text-lg shadow-lg"
+          class="w-full mt-4 bg-purple-700 hover:bg-purple-800 transition text-white py-4 rounded-2xl font-bold text-lg shadow-xl"
         >
-          Entrar
+          Entrar no Sistema
         </button>
 
         <p id="erroSenha"
-           class="text-red-600 text-center mt-4 hidden font-semibold">
+           class="text-red-600 text-center mt-4 hidden font-bold">
         </p>
 
       </div>
 
     </div>
+
   </div>
 
   <!-- SISTEMA -->
+
   <div id="sistema" class="hidden">
 
     <!-- HEADER -->
-    <header class="bg-white shadow-xl">
 
-      <div class="max-w-7xl mx-auto p-6">
+    <header class="glass shadow-2xl sticky top-0 z-40">
+
+      <div class="max-w-7xl mx-auto p-4 md:p-6">
 
         <div class="flex flex-col lg:flex-row gap-5 items-center justify-between">
 
-          <div class="flex items-center gap-5">
+          <div class="flex flex-col sm:flex-row items-center gap-4">
 
             <!-- LOGO -->
-            <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-purple-600 shadow-lg bg-white">
 
-              <!-- TROQUE PELA SUA LOGO -->
+            <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-purple-700 shadow-2xl bg-white">
+
               <img
-                src="images (76).jpeg"?text=LOGO"
+                src="https://via.placeholder.com/400x400.png?text=LOGO"
                 class="w-full h-full object-cover"
               >
 
             </div>
 
-            <div>
+            <div class="text-center sm:text-left">
 
-              <h1 class="text-4xl font-black text-purple-700">
+              <h1 class="text-3xl md:text-4xl font-black text-purple-700">
                 Controle de Estoque
               </h1>
 
@@ -132,15 +166,27 @@
 
           </div>
 
-          <!-- PESQUISA -->
-          <div class="w-full lg:w-96">
+          <!-- DIREITA -->
+
+          <div class="flex flex-col md:flex-row gap-3 w-full lg:w-auto">
+
+            <!-- PESQUISA -->
 
             <input
               type="text"
               id="pesquisa"
-              placeholder="Pesquisar produto ou número..."
-              class="w-full border-2 border-purple-300 rounded-2xl px-5 py-4 outline-none focus:border-purple-700 shadow-md"
+              placeholder="Pesquisar produto..."
+              class="w-full md:w-80 border-2 border-purple-300 rounded-2xl px-5 py-4 outline-none focus:border-purple-700 shadow-md"
             >
+
+            <!-- BOTÃO SALVAR -->
+
+            <button
+              onclick="salvarDados()"
+              class="bg-green-600 hover:bg-green-700 transition text-white px-8 py-4 rounded-2xl font-black shadow-xl"
+            >
+              SALVAR ALTERAÇÕES
+            </button>
 
           </div>
 
@@ -150,28 +196,35 @@
 
     </header>
 
-    <!-- CONTEÚDO -->
+    <!-- MAIN -->
+
     <main class="max-w-7xl mx-auto p-5">
 
-      <!-- CARD INFO -->
-      <div class="bg-white rounded-3xl shadow-xl p-5 mb-6">
+      <!-- INFO -->
 
-        <div class="flex flex-col lg:flex-row gap-4 justify-between">
+      <div class="bg-white rounded-3xl shadow-2xl p-6 mb-6">
+
+        <div class="flex flex-col lg:flex-row gap-5 justify-between">
 
           <div>
-            <h2 class="text-2xl font-bold text-purple-700">
+
+            <h2 class="text-3xl font-black text-purple-700">
               Sistema Inteligente de Estoque
             </h2>
 
-            <p class="text-gray-500 mt-2">
-              Produtos abaixo de 8 unidades ficam vermelhos automaticamente.
+            <p class="text-gray-500 mt-3 text-lg leading-relaxed">
+
+              O sistema mantém automaticamente o estoque total salvo.
+              Após 00:00 apenas entrada e saída são zerados automaticamente.
+
             </p>
+
           </div>
 
-          <div class="bg-purple-100 rounded-2xl px-5 py-4 flex items-center">
+          <div class="bg-purple-100 rounded-3xl px-6 py-5 flex items-center shadow-lg">
 
-            <span class="text-purple-700 font-bold text-lg">
-              Salvamento automático ativado
+            <span class="text-purple-700 font-black text-lg">
+              Controle automático ativado
             </span>
 
           </div>
@@ -181,22 +234,44 @@
       </div>
 
       <!-- TABELA -->
+
       <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
 
-        <div class="overflow-auto scroll-custom">
+        <div class="overflow-x-auto scroll-custom">
 
-          <table class="w-full min-w-[1200px]">
+          <table class="w-full min-w-[1300px]">
 
             <thead>
 
-              <tr class="bg-purple-700 text-white">
+              <tr class="bg-purple-700 text-white text-sm md:text-base">
 
-                <th class="p-4 text-left">N°</th>
-                <th class="p-4 text-left">Produto</th>
-                <th class="p-4 text-center">Entrada</th>
-                <th class="p-4 text-center">Saída</th>
-                <th class="p-4 text-center">Quantidade Atual</th>
-                <th class="p-4 text-center">Status</th>
+                <th class="p-5 text-left">
+                  N°
+                </th>
+
+                <th class="p-5 text-left">
+                  Produto
+                </th>
+
+                <th class="p-5 text-center">
+                  Entrada Hoje
+                </th>
+
+                <th class="p-5 text-center">
+                  Saída Hoje
+                </th>
+
+                <th class="p-5 text-center">
+                  Estoque Atual
+                </th>
+
+                <th class="p-5 text-center">
+                  Estoque Mínimo
+                </th>
+
+                <th class="p-5 text-center">
+                  Status
+                </th>
 
               </tr>
 
@@ -213,11 +288,12 @@
     </main>
 
     <!-- FOOTER -->
+
     <footer class="mt-10 bg-purple-900 text-white">
 
       <div class="max-w-7xl mx-auto p-6 text-center">
 
-        <h2 class="font-bold text-xl">
+        <h2 class="font-black text-2xl">
           Desenvolvido por Eliezer Rodrigues
         </h2>
 
@@ -231,24 +307,72 @@
 
   </div>
 
+  <!-- MODAL SALVAR -->
+
+  <div id="modalSalvar"
+       class="hidden fixed inset-0 bg-black/70 z-[999] items-center justify-center p-4">
+
+    <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md fade">
+
+      <div class="flex justify-center">
+
+        <div class="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center shadow-lg">
+
+          <span class="text-5xl">
+            ✅
+          </span>
+
+        </div>
+
+      </div>
+
+      <h2 class="text-3xl font-black text-center text-green-700 mt-5">
+        Alterações Salvas
+      </h2>
+
+      <p class="text-center text-gray-500 mt-3 leading-relaxed">
+
+        Todas as modificações foram salvas com sucesso no sistema.
+
+      </p>
+
+      <button
+        onclick="fecharModal()"
+        class="w-full mt-8 bg-green-600 hover:bg-green-700 transition text-white py-4 rounded-2xl font-black shadow-xl"
+      >
+        FECHAR
+      </button>
+
+    </div>
+
+  </div>
+
   <script>
 
-    // SENHA
+    // =========================
+    // LOGIN
+    // =========================
+
     function verificarSenha(){
 
-      const senha = document.getElementById("senha").value;
+      const senha =
+        document.getElementById("senha").value;
 
       if(senha === "007"){
 
-        document.getElementById("loginTela").style.display = "none";
-        document.getElementById("sistema").classList.remove("hidden");
+        document.getElementById("loginTela")
+          .style.display = "none";
+
+        document.getElementById("sistema")
+          .classList.remove("hidden");
 
       }else{
 
-        const erro = document.getElementById("erroSenha");
+        const erro =
+          document.getElementById("erroSenha");
 
         erro.innerHTML =
-          "Desculpe, só o Eliezer pode acessar. Caso seja você, tente novamente!";
+        "Desculpe, só o Eliezer pode acessar. Caso seja você, tente novamente!";
 
         erro.classList.remove("hidden");
 
@@ -256,175 +380,124 @@
 
     }
 
-    // LOCAL STORAGE
-    let produtos = JSON.parse(localStorage.getItem("estoqueProdutos"));
+    // =========================
+    // DATA
+    // =========================
 
-    // SE NÃO EXISTIR
+    const hoje =
+      new Date().toLocaleDateString("pt-BR");
+
+    const ultimaData =
+      localStorage.getItem("ultimaAtualizacao");
+
+    // =========================
+    // PRODUTOS
+    // =========================
+
+    let produtos =
+      JSON.parse(localStorage.getItem("estoqueProdutos"));
+
     if(!produtos){
 
       produtos = [];
 
-      // TROQUE ESTA PARTE:
+      for(let i = 1; i <= 70; i++){
 
-for(let i = 1; i <= 70; i++){
+        produtos.push({
 
-  produtos.push({
-    id: i,
-    nome: "Produto " + i,
-    entrada: "",
-    saida: ""
-  });
+          id:i,
 
-}
+          nome:"Produto " + i,
 
-// POR ESTA AQUI ↓↓↓
+          entradaHoje:"",
 
-const listaProdutos = [
+          saidaHoje:"",
 
-  "Produto 1",
-  "Produto 2",
-  "Produto 3",
-  "Produto 4",
-  "Produto 5",
-  "Produto 6",
-  "Produto 7",
-  "Produto 8",
-  "Produto 9",
-  "Produto 10",
-  "Produto 11",
-  "Produto 12",
-  "Produto 13",
-  "Produto 14",
-  "Produto 15",
-  "Produto 16",
-  "Produto 17",
-  "Produto 18",
-  "Produto 19",
-  "Produto 20",
-  "Produto 21",
-  "Produto 22",
-  "Produto 23",
-  "Produto 24",
-  "Produto 25",
-  "Produto 26",
-  "Produto 27",
-  "Produto 28",
-  "Produto 29",
-  "Produto 30",
-  "Produto 31",
-  "Produto 32",
-  "Produto 33",
-  "Produto 34",
-  "Produto 35",
-  "Produto 36",
-  "Produto 37",
-  "Produto 38",
-  "Produto 39",
-  "Produto 40",
-  "Produto 41",
-  "Produto 42",
-  "Produto 43",
-  "Produto 44",
-  "Produto 45",
-  "Produto 46",
-  "Produto 47",
-  "Produto 48",
-  "Produto 49",
-  "Produto 50",
-  "Produto 51",
-  "Produto 52",
-  "Produto 53",
-  "Produto 54",
-  "Produto 55",
-  "Produto 56",
-  "Produto 57",
-  "Produto 58",
-  "Produto 59",
-  "Produto 60",
-  "Produto 61",
-  "Produto 62",
-  "Produto 63",
-  "Produto 64",
-  "Produto 65",
-  "Produto 66",
-  "Produto 67",
-  "Produto 68",
-  "Produto 69",
-  "Produto 70"
+          estoqueAtual:0,
 
-];
+          estoqueMinimo:8
 
-listaProdutos.forEach((nome, index) => {
-
-  produtos.push({
-    id: index + 1,
-    nome: nome,
-    entrada: "",
-    saida: ""
-  });
-
-});
-
-      salvarDados();
-
-    }
-
-    const tabela = document.getElementById("tabelaProdutos");
-
-    // SALVAR
-    function salvarDados(){
-
-      const confirmar = confirm(
-        "Deseja salvar essa modificação?"
-      );
-
-      if(confirmar){
-
-        localStorage.setItem(
-          "estoqueProdutos",
-          JSON.stringify(produtos)
-        );
+        });
 
       }
 
-      renderizarTabela(produtos);
+      localStorage.setItem(
+        "estoqueProdutos",
+        JSON.stringify(produtos)
+      );
 
     }
 
-    // CALCULAR
-    function calcularQuantidade(entrada, saida){
+    // =========================
+    // NOVO DIA
+    // =========================
 
-      const numeroEntrada = parseFloat(entrada) || 0;
-      const numeroSaida = parseFloat(saida) || 0;
+    if(ultimaData !== hoje){
 
-      return numeroEntrada - numeroSaida;
+      produtos.forEach(produto=>{
+
+        const entrada =
+          parseFloat(produto.entradaHoje) || 0;
+
+        const saida =
+          parseFloat(produto.saidaHoje) || 0;
+
+        produto.estoqueAtual =
+          produto.estoqueAtual + entrada - saida;
+
+        produto.entradaHoje = "";
+
+        produto.saidaHoje = "";
+
+      });
+
+      localStorage.setItem(
+        "ultimaAtualizacao",
+        hoje
+      );
+
+      localStorage.setItem(
+        "estoqueProdutos",
+        JSON.stringify(produtos)
+      );
 
     }
 
-    // RENDERIZAR
+    // =========================
+    // TABELA
+    // =========================
+
+    const tabela =
+      document.getElementById("tabelaProdutos");
+
     function renderizarTabela(lista){
 
       tabela.innerHTML = "";
 
-      lista.forEach((produto, index) => {
+      lista.forEach((produto,index)=>{
 
-        const quantidade = calcularQuantidade(
-          produto.entrada,
-          produto.saida
-        );
+        const entrada =
+          parseFloat(produto.entradaHoje) || 0;
 
-        const baixo = quantidade < 8;
+        const saida =
+          parseFloat(produto.saidaHoje) || 0;
+
+        const estoqueFinal =
+          produto.estoqueAtual + entrada - saida;
+
+        const estoqueBaixo =
+          estoqueFinal <= produto.estoqueMinimo;
 
         tabela.innerHTML += `
 
           <tr class="
             border-b
-            transition
             hover:bg-gray-100
-            ${baixo ? 'bg-red-100' : 'bg-white'}
+            transition
+            ${estoqueBaixo ? 'bg-red-50' : 'bg-white'}
           ">
 
-            <td class="p-4 font-bold">
+            <td class="p-4 font-black">
               ${produto.id}
             </td>
 
@@ -434,7 +507,12 @@ listaProdutos.forEach((nome, index) => {
                 type="text"
                 value="${produto.nome}"
                 onchange="editarNome(${index}, this.value)"
-                class="w-full border rounded-xl px-4 py-3"
+                class="
+                  w-full
+                  border
+                  rounded-2xl
+                  px-4 py-3
+                "
               >
 
             </td>
@@ -442,11 +520,17 @@ listaProdutos.forEach((nome, index) => {
             <td class="p-4 text-center">
 
               <input
-                type="text"
-                value="${produto.entrada}"
+                type="number"
+                value="${produto.entradaHoje}"
                 onchange="editarEntrada(${index}, this.value)"
-                placeholder="Ex: 10 cx"
-                class="w-40 border rounded-xl px-4 py-3 text-center"
+                placeholder="0"
+                class="
+                  w-28 md:w-36
+                  border
+                  rounded-2xl
+                  px-4 py-3
+                  text-center
+                "
               >
 
             </td>
@@ -454,59 +538,93 @@ listaProdutos.forEach((nome, index) => {
             <td class="p-4 text-center">
 
               <input
-                type="text"
-                value="${produto.saida}"
+                type="number"
+                value="${produto.saidaHoje}"
                 onchange="editarSaida(${index}, this.value)"
-                placeholder="Ex: 2 unidades"
-                class="w-40 border rounded-xl px-4 py-3 text-center"
+                placeholder="0"
+                class="
+                  w-28 md:w-36
+                  border
+                  rounded-2xl
+                  px-4 py-3
+                  text-center
+                "
               >
 
             </td>
+
+            <!-- ESTOQUE TOTAL -->
 
             <td class="
               p-4
               text-center
               font-black
-              text-xl
-              ${baixo ? 'text-red-700' : 'text-green-700'}
+              text-2xl
+              ${estoqueBaixo ? 'text-red-700' : 'text-green-700'}
             ">
 
-              ${quantidade}
+              ${estoqueFinal}
 
             </td>
+
+            <!-- ESTOQUE MINIMO -->
+
+            <td class="p-4 text-center">
+
+              <input
+                type="number"
+                value="${produto.estoqueMinimo}"
+                onchange="editarMinimo(${index}, this.value)"
+                class="
+                  w-28
+                  border-2
+                  border-purple-300
+                  rounded-2xl
+                  px-4 py-3
+                  text-center
+                  font-black
+                "
+              >
+
+            </td>
+
+            <!-- STATUS -->
 
             <td class="p-4 text-center">
 
               ${
-                baixo
+                estoqueBaixo
+
                 ?
+
                 `
                 <span class="
                   bg-red-600
                   text-white
-                  px-5
-                  py-2
+                  px-5 py-3
                   rounded-full
-                  font-bold
-                  shadow-lg
+                  font-black
+                  shadow-xl
                 ">
                   COMPRAR
                 </span>
                 `
+
                 :
+
                 `
                 <span class="
                   bg-green-600
                   text-white
-                  px-5
-                  py-2
+                  px-5 py-3
                   rounded-full
-                  font-bold
-                  shadow-lg
+                  font-black
+                  shadow-xl
                 ">
                   OK
                 </span>
                 `
+
               }
 
             </td>
@@ -519,39 +637,91 @@ listaProdutos.forEach((nome, index) => {
 
     }
 
+    // =========================
     // EDITAR
-    function editarNome(index, valor){
+    // =========================
+
+    function editarNome(index,valor){
 
       produtos[index].nome = valor;
-      salvarDados();
 
     }
 
-    function editarEntrada(index, valor){
+    function editarEntrada(index,valor){
 
-      produtos[index].entrada = valor;
-      salvarDados();
-
-    }
-
-    function editarSaida(index, valor){
-
-      produtos[index].saida = valor;
-      salvarDados();
+      produtos[index].entradaHoje = valor;
 
     }
 
+    function editarSaida(index,valor){
+
+      produtos[index].saidaHoje = valor;
+
+    }
+
+    function editarMinimo(index,valor){
+
+      produtos[index].estoqueMinimo =
+        parseFloat(valor) || 0;
+
+    }
+
+    // =========================
+    // SALVAR
+    // =========================
+
+    function salvarDados(){
+
+      localStorage.setItem(
+        "estoqueProdutos",
+        JSON.stringify(produtos)
+      );
+
+      document.getElementById("modalSalvar")
+        .classList.remove("hidden");
+
+      document.getElementById("modalSalvar")
+        .classList.add("flex");
+
+      renderizarTabela(produtos);
+
+    }
+
+    function fecharModal(){
+
+      document.getElementById("modalSalvar")
+        .classList.add("hidden");
+
+      document.getElementById("modalSalvar")
+        .classList.remove("flex");
+
+    }
+
+    // =========================
     // PESQUISA
+    // =========================
+
     document.getElementById("pesquisa")
-      .addEventListener("input", function(){
+      .addEventListener("input",function(){
 
-      const valor = this.value.toLowerCase();
+      const valor =
+        this.value.toLowerCase();
 
-      const filtrados = produtos.filter(produto => {
+      const filtrados =
+        produtos.filter(produto=>{
 
-        return (
-          produto.nome.toLowerCase().includes(valor) ||
-          produto.id.toString().includes(valor)
+        return(
+
+          produto.nome
+            .toLowerCase()
+            .includes(valor)
+
+          ||
+
+          produto.id
+            .toString()
+            .includes(valor)
+
         );
 
       });
@@ -560,19 +730,29 @@ listaProdutos.forEach((nome, index) => {
 
     });
 
+    // =========================
     // ENTER
+    // =========================
+
     document.getElementById("senha")
-      .addEventListener("keypress", function(e){
+      .addEventListener("keypress",function(e){
 
       if(e.key === "Enter"){
+
         verificarSenha();
+
       }
 
     });
+
+    // =========================
+    // INICIAR
+    // =========================
 
     renderizarTabela(produtos);
 
   </script>
 
 </body>
-  </html>
+
+</html>
