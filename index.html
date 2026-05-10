@@ -4,34 +4,44 @@
 <head>
 
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-
-  <title>Controle de Estoque - Marília de Dirceu</title>
+  <title>Controle de Estoque • Marília de Dirceu</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
 
-    html,
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
     body{
+      background:
+      linear-gradient(
+        135deg,
+        #f5f3ff,
+        #ede9fe,
+        #faf5ff
+      );
+
+      font-family:
+      Arial,
+      Helvetica,
+      sans-serif;
+
       overflow-x:hidden;
     }
 
-    body{
-      background: linear-gradient(to right,#f5f3ff,#ede9fe,#f3f4f6);
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .scroll-custom::-webkit-scrollbar{
-      width:8px;
-      height:8px;
-    }
-
-    .scroll-custom::-webkit-scrollbar-thumb{
-      background:#7e22ce;
-      border-radius:999px;
+    .glass{
+      backdrop-filter:blur(12px);
+      background:rgba(255,255,255,.78);
     }
 
     .fade{
@@ -52,15 +62,41 @@
 
     }
 
-    .glass{
-      backdrop-filter: blur(10px);
-      background: rgba(255,255,255,.75);
+    .scroll-custom::-webkit-scrollbar{
+      width:8px;
+      height:8px;
     }
 
-    @media(max-width:768px){
+    .scroll-custom::-webkit-scrollbar-thumb{
+      background:#7e22ce;
+      border-radius:999px;
+    }
 
-      table{
-        min-width:1200px;
+    table{
+      min-width:1500px;
+    }
+
+    .status-ok{
+      background:#16a34a;
+    }
+
+    .status-buy{
+      background:#dc2626;
+      animation:pulse 1.5s infinite;
+    }
+
+    @keyframes pulse{
+
+      0%{
+        transform:scale(1);
+      }
+
+      50%{
+        transform:scale(1.05);
+      }
+
+      100%{
+        transform:scale(1);
       }
 
     }
@@ -73,16 +109,44 @@
 
   <!-- LOGIN -->
 
-  <div id="loginTela"
-       class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+  <div
+    id="loginTela"
+    class="
+      fixed
+      inset-0
+      bg-black/80
+      flex
+      items-center
+      justify-center
+      z-50
+      p-4
+    "
+  >
 
-    <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md fade">
+    <div class="
+      bg-white
+      rounded-3xl
+      shadow-2xl
+      p-8
+      w-full
+      max-w-md
+      fade
+    ">
 
-      <div class="flex justify-center mb-5">
+      <!-- LOGO -->
 
-        <div class="w-32 h-32 rounded-full border-4 border-purple-700 overflow-hidden shadow-2xl bg-gray-100">
+      <div class="flex justify-center mb-6">
 
-          <!-- TROQUE SUA LOGO -->
+        <div class="
+          w-32
+          h-32
+          rounded-full
+          border-4
+          border-purple-700
+          overflow-hidden
+          shadow-2xl
+          bg-white
+        ">
 
           <img
             src="https://via.placeholder.com/400x400.png?text=LOGO"
@@ -93,12 +157,26 @@
 
       </div>
 
-      <h1 class="text-4xl font-black text-center text-purple-700">
+      <h1 class="
+        text-4xl
+        font-black
+        text-center
+        text-purple-700
+      ">
+
         Controle de Estoque
+
       </h1>
 
-      <p class="text-center text-gray-500 mt-2 text-lg">
+      <p class="
+        text-center
+        text-gray-500
+        text-lg
+        mt-2
+      ">
+
         Marília de Dirceu
+
       </p>
 
       <div class="mt-8">
@@ -107,19 +185,49 @@
           type="password"
           id="senha"
           placeholder="Digite sua senha"
-          class="w-full border-2 border-purple-300 rounded-2xl px-5 py-4 outline-none focus:border-purple-700"
+          class="
+            w-full
+            border-2
+            border-purple-300
+            rounded-2xl
+            px-5
+            py-4
+            outline-none
+            focus:border-purple-700
+          "
         >
 
         <button
           onclick="verificarSenha()"
-          class="w-full mt-4 bg-purple-700 hover:bg-purple-800 transition text-white py-4 rounded-2xl font-bold text-lg shadow-xl"
+          class="
+            w-full
+            mt-4
+            bg-purple-700
+            hover:bg-purple-800
+            transition
+            text-white
+            py-4
+            rounded-2xl
+            font-black
+            text-lg
+            shadow-xl
+          "
         >
+
           Entrar no Sistema
+
         </button>
 
-        <p id="erroSenha"
-           class="text-red-600 text-center mt-4 hidden font-bold">
-        </p>
+        <p
+          id="erroSenha"
+          class="
+            hidden
+            text-red-600
+            text-center
+            font-bold
+            mt-4
+          "
+        ></p>
 
       </div>
 
@@ -133,17 +241,39 @@
 
     <!-- HEADER -->
 
-    <header class="glass shadow-2xl sticky top-0 z-40">
+    <header class="glass sticky top-0 z-40 shadow-2xl">
 
-      <div class="max-w-7xl mx-auto p-4 md:p-6">
+      <div class="max-w-7xl mx-auto p-5">
 
-        <div class="flex flex-col lg:flex-row gap-5 items-center justify-between">
+        <div class="
+          flex
+          flex-col
+          xl:flex-row
+          gap-5
+          items-center
+          justify-between
+        ">
 
-          <div class="flex flex-col sm:flex-row items-center gap-4">
+          <!-- ESQUERDA -->
 
-            <!-- LOGO -->
+          <div class="
+            flex
+            flex-col
+            sm:flex-row
+            items-center
+            gap-5
+          ">
 
-            <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-purple-700 shadow-2xl bg-white">
+            <div class="
+              w-24
+              h-24
+              rounded-full
+              overflow-hidden
+              border-4
+              border-purple-700
+              shadow-2xl
+              bg-white
+            ">
 
               <img
                 src="https://via.placeholder.com/400x400.png?text=LOGO"
@@ -154,12 +284,21 @@
 
             <div class="text-center sm:text-left">
 
-              <h1 class="text-3xl md:text-4xl font-black text-purple-700">
+              <h1 class="
+                text-3xl
+                md:text-4xl
+                font-black
+                text-purple-700
+              ">
+
                 Controle de Estoque
+
               </h1>
 
               <p class="text-gray-500 text-lg">
+
                 Marília de Dirceu
+
               </p>
 
             </div>
@@ -168,24 +307,50 @@
 
           <!-- DIREITA -->
 
-          <div class="flex flex-col md:flex-row gap-3 w-full lg:w-auto">
-
-            <!-- PESQUISA -->
+          <div class="
+            flex
+            flex-col
+            md:flex-row
+            gap-3
+            w-full
+            xl:w-auto
+          ">
 
             <input
               type="text"
               id="pesquisa"
               placeholder="Pesquisar produto..."
-              class="w-full md:w-80 border-2 border-purple-300 rounded-2xl px-5 py-4 outline-none focus:border-purple-700 shadow-md"
+              class="
+                w-full
+                md:w-80
+                border-2
+                border-purple-300
+                rounded-2xl
+                px-5
+                py-4
+                outline-none
+                focus:border-purple-700
+                shadow-md
+              "
             >
-
-            <!-- BOTÃO SALVAR -->
 
             <button
               onclick="salvarDados()"
-              class="bg-green-600 hover:bg-green-700 transition text-white px-8 py-4 rounded-2xl font-black shadow-xl"
+              class="
+                bg-green-600
+                hover:bg-green-700
+                transition
+                text-white
+                px-8
+                py-4
+                rounded-2xl
+                font-black
+                shadow-xl
+              "
             >
+
               SALVAR ALTERAÇÕES
+
             </button>
 
           </div>
@@ -200,34 +365,112 @@
 
     <main class="max-w-7xl mx-auto p-5">
 
-      <!-- INFO -->
+      <!-- CARDS -->
 
-      <div class="bg-white rounded-3xl shadow-2xl p-6 mb-6">
+      <div class="
+        grid
+        grid-cols-1
+        md:grid-cols-3
+        gap-5
+        mb-6
+      ">
 
-        <div class="flex flex-col lg:flex-row gap-5 justify-between">
+        <div class="
+          bg-white
+          rounded-3xl
+          shadow-2xl
+          p-6
+        ">
 
-          <div>
+          <h2 class="
+            text-lg
+            text-gray-500
+            font-bold
+          ">
 
-            <h2 class="text-3xl font-black text-purple-700">
-              Sistema Inteligente de Estoque
-            </h2>
+            Total de Produtos
 
-            <p class="text-gray-500 mt-3 text-lg leading-relaxed">
+          </h2>
 
-              O sistema mantém automaticamente o estoque total salvo.
-              Após 00:00 apenas entrada e saída são zerados automaticamente.
+          <p
+            id="totalProdutos"
+            class="
+              text-5xl
+              font-black
+              text-purple-700
+              mt-3
+            "
+          >
 
-            </p>
+            0
 
-          </div>
+          </p>
 
-          <div class="bg-purple-100 rounded-3xl px-6 py-5 flex items-center shadow-lg">
+        </div>
 
-            <span class="text-purple-700 font-black text-lg">
-              Controle automático ativado
-            </span>
+        <div class="
+          bg-white
+          rounded-3xl
+          shadow-2xl
+          p-6
+        ">
 
-          </div>
+          <h2 class="
+            text-lg
+            text-gray-500
+            font-bold
+          ">
+
+            Estoque Total Atual
+
+          </h2>
+
+          <p
+            id="estoqueTotal"
+            class="
+              text-5xl
+              font-black
+              text-green-700
+              mt-3
+            "
+          >
+
+            0
+
+          </p>
+
+        </div>
+
+        <div class="
+          bg-white
+          rounded-3xl
+          shadow-2xl
+          p-6
+        ">
+
+          <h2 class="
+            text-lg
+            text-gray-500
+            font-bold
+          ">
+
+            Produtos Baixos
+
+          </h2>
+
+          <p
+            id="produtosBaixos"
+            class="
+              text-5xl
+              font-black
+              text-red-700
+              mt-3
+            "
+          >
+
+            0
+
+          </p>
 
         </div>
 
@@ -235,15 +478,25 @@
 
       <!-- TABELA -->
 
-      <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+      <div class="
+        bg-white
+        rounded-3xl
+        shadow-2xl
+        overflow-hidden
+      ">
 
         <div class="overflow-x-auto scroll-custom">
 
-          <table class="w-full min-w-[1300px]">
+          <table class="w-full">
 
             <thead>
 
-              <tr class="bg-purple-700 text-white text-sm md:text-base">
+              <tr class="
+                bg-purple-700
+                text-white
+                text-sm
+                md:text-base
+              ">
 
                 <th class="p-5 text-left">
                   N°
@@ -289,16 +542,20 @@
 
     <!-- FOOTER -->
 
-    <footer class="mt-10 bg-purple-900 text-white">
+    <footer class="bg-purple-900 text-white mt-10">
 
       <div class="max-w-7xl mx-auto p-6 text-center">
 
-        <h2 class="font-black text-2xl">
+        <h2 class="text-2xl font-black">
+
           Desenvolvido por Eliezer Rodrigues
+
         </h2>
 
         <p class="text-purple-200 mt-2">
-          Sistema profissional de controle de estoque • 2026
+
+          Sistema Profissional de Controle de Estoque • 2026
+
         </p>
 
       </div>
@@ -307,16 +564,43 @@
 
   </div>
 
-  <!-- MODAL SALVAR -->
+  <!-- MODAL -->
 
-  <div id="modalSalvar"
-       class="hidden fixed inset-0 bg-black/70 z-[999] items-center justify-center p-4">
+  <div
+    id="modalSalvar"
+    class="
+      hidden
+      fixed
+      inset-0
+      bg-black/70
+      z-50
+      items-center
+      justify-center
+      p-4
+    "
+  >
 
-    <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md fade">
+    <div class="
+      bg-white
+      rounded-3xl
+      shadow-2xl
+      p-8
+      w-full
+      max-w-md
+      fade
+    ">
 
       <div class="flex justify-center">
 
-        <div class="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center shadow-lg">
+        <div class="
+          w-24
+          h-24
+          rounded-full
+          bg-green-100
+          flex
+          items-center
+          justify-center
+        ">
 
           <span class="text-5xl">
             ✅
@@ -326,21 +610,46 @@
 
       </div>
 
-      <h2 class="text-3xl font-black text-center text-green-700 mt-5">
+      <h2 class="
+        text-3xl
+        font-black
+        text-center
+        text-green-700
+        mt-5
+      ">
+
         Alterações Salvas
+
       </h2>
 
-      <p class="text-center text-gray-500 mt-3 leading-relaxed">
+      <p class="
+        text-center
+        text-gray-500
+        mt-3
+      ">
 
-        Todas as modificações foram salvas com sucesso no sistema.
+        Todas as alterações foram salvas com sucesso.
 
       </p>
 
       <button
         onclick="fecharModal()"
-        class="w-full mt-8 bg-green-600 hover:bg-green-700 transition text-white py-4 rounded-2xl font-black shadow-xl"
+        class="
+          w-full
+          mt-8
+          bg-green-600
+          hover:bg-green-700
+          transition
+          text-white
+          py-4
+          rounded-2xl
+          font-black
+          shadow-xl
+        "
       >
+
         FECHAR
+
       </button>
 
     </div>
@@ -349,9 +658,7 @@
 
   <script>
 
-    // =========================
     // LOGIN
-    // =========================
 
     function verificarSenha(){
 
@@ -380,9 +687,7 @@
 
     }
 
-    // =========================
     // DATA
-    // =========================
 
     const hoje =
       new Date().toLocaleDateString("pt-BR");
@@ -390,12 +695,14 @@
     const ultimaData =
       localStorage.getItem("ultimaAtualizacao");
 
-    // =========================
     // PRODUTOS
-    // =========================
 
     let produtos =
-      JSON.parse(localStorage.getItem("estoqueProdutos"));
+      JSON.parse(
+        localStorage.getItem("estoqueProdutos")
+      );
+
+    // PRIMEIRA VEZ
 
     if(!produtos){
 
@@ -415,7 +722,7 @@
 
           estoqueAtual:0,
 
-          estoqueMinimo:8
+          estoqueMinimo:10
 
         });
 
@@ -428,25 +735,23 @@
 
     }
 
-    // =========================
     // NOVO DIA
-    // =========================
 
     if(ultimaData !== hoje){
 
       produtos.forEach(produto=>{
 
-        const entrada =
-          parseFloat(produto.entradaHoje) || 0;
-
-        const saida =
-          parseFloat(produto.saidaHoje) || 0;
-
         produto.estoqueAtual =
-          produto.estoqueAtual + entrada - saida;
+
+          produto.estoqueAtual +
+
+          (parseFloat(produto.entradaHoje) || 0)
+
+          -
+
+          (parseFloat(produto.saidaHoje) || 0);
 
         produto.entradaHoje = "";
-
         produto.saidaHoje = "";
 
       });
@@ -463,42 +768,58 @@
 
     }
 
-    // =========================
-    // TABELA
-    // =========================
-
     const tabela =
       document.getElementById("tabelaProdutos");
+
+    // RENDERIZAR
 
     function renderizarTabela(lista){
 
       tabela.innerHTML = "";
 
+      let estoqueTotal = 0;
+      let produtosBaixos = 0;
+
       lista.forEach((produto,index)=>{
 
-        const entrada =
+        const entradaHoje =
           parseFloat(produto.entradaHoje) || 0;
 
-        const saida =
+        const saidaHoje =
           parseFloat(produto.saidaHoje) || 0;
 
+        // ESTOQUE EM TEMPO REAL
+
         const estoqueFinal =
-          produto.estoqueAtual + entrada - saida;
+
+          produto.estoqueAtual +
+
+          entradaHoje -
+
+          saidaHoje;
+
+        estoqueTotal += estoqueFinal;
 
         const estoqueBaixo =
-          estoqueFinal <= produto.estoqueMinimo;
+          estoqueFinal < produto.estoqueMinimo;
+
+        if(estoqueBaixo){
+          produtosBaixos++;
+        }
 
         tabela.innerHTML += `
 
           <tr class="
             border-b
-            hover:bg-gray-100
+            hover:bg-gray-50
             transition
-            ${estoqueBaixo ? 'bg-red-50' : 'bg-white'}
+            ${estoqueBaixo ? 'bg-red-50' : ''}
           ">
 
             <td class="p-4 font-black">
+
               ${produto.id}
+
             </td>
 
             <td class="p-4">
@@ -511,7 +832,8 @@
                   w-full
                   border
                   rounded-2xl
-                  px-4 py-3
+                  px-4
+                  py-3
                 "
               >
 
@@ -525,10 +847,11 @@
                 onchange="editarEntrada(${index}, this.value)"
                 placeholder="0"
                 class="
-                  w-28 md:w-36
+                  w-32
                   border
                   rounded-2xl
-                  px-4 py-3
+                  px-4
+                  py-3
                   text-center
                 "
               >
@@ -543,17 +866,16 @@
                 onchange="editarSaida(${index}, this.value)"
                 placeholder="0"
                 class="
-                  w-28 md:w-36
+                  w-32
                   border
                   rounded-2xl
-                  px-4 py-3
+                  px-4
+                  py-3
                   text-center
                 "
               >
 
             </td>
-
-            <!-- ESTOQUE TOTAL -->
 
             <td class="
               p-4
@@ -567,8 +889,6 @@
 
             </td>
 
-            <!-- ESTOQUE MINIMO -->
-
             <td class="p-4 text-center">
 
               <input
@@ -580,15 +900,14 @@
                   border-2
                   border-purple-300
                   rounded-2xl
-                  px-4 py-3
+                  px-4
+                  py-3
                   text-center
                   font-black
                 "
               >
 
             </td>
-
-            <!-- STATUS -->
 
             <td class="p-4 text-center">
 
@@ -599,14 +918,17 @@
 
                 `
                 <span class="
-                  bg-red-600
+                  status-buy
                   text-white
-                  px-5 py-3
+                  px-6
+                  py-3
                   rounded-full
                   font-black
                   shadow-xl
                 ">
+
                   COMPRAR
+
                 </span>
                 `
 
@@ -614,17 +936,19 @@
 
                 `
                 <span class="
-                  bg-green-600
+                  status-ok
                   text-white
-                  px-5 py-3
+                  px-6
+                  py-3
                   rounded-full
                   font-black
                   shadow-xl
                 ">
+
                   OK
+
                 </span>
                 `
-
               }
 
             </td>
@@ -635,11 +959,20 @@
 
       });
 
+      // CARDS SUPERIORES
+
+      document.getElementById("totalProdutos")
+        .innerHTML = produtos.length;
+
+      document.getElementById("estoqueTotal")
+        .innerHTML = estoqueTotal;
+
+      document.getElementById("produtosBaixos")
+        .innerHTML = produtosBaixos;
+
     }
 
-    // =========================
     // EDITAR
-    // =========================
 
     function editarNome(index,valor){
 
@@ -651,11 +984,15 @@
 
       produtos[index].entradaHoje = valor;
 
+      renderizarTabela(produtos);
+
     }
 
     function editarSaida(index,valor){
 
       produtos[index].saidaHoje = valor;
+
+      renderizarTabela(produtos);
 
     }
 
@@ -664,18 +1001,42 @@
       produtos[index].estoqueMinimo =
         parseFloat(valor) || 0;
 
+      renderizarTabela(produtos);
+
     }
 
-    // =========================
     // SALVAR
-    // =========================
 
     function salvarDados(){
+
+      produtos.forEach(produto=>{
+
+        produto.estoqueAtual =
+
+          produto.estoqueAtual +
+
+          (parseFloat(produto.entradaHoje) || 0)
+
+          -
+
+          (parseFloat(produto.saidaHoje) || 0);
+
+        produto.entradaHoje = "";
+        produto.saidaHoje = "";
+
+      });
 
       localStorage.setItem(
         "estoqueProdutos",
         JSON.stringify(produtos)
       );
+
+      localStorage.setItem(
+        "ultimaAtualizacao",
+        hoje
+      );
+
+      renderizarTabela(produtos);
 
       document.getElementById("modalSalvar")
         .classList.remove("hidden");
@@ -683,9 +1044,9 @@
       document.getElementById("modalSalvar")
         .classList.add("flex");
 
-      renderizarTabela(produtos);
-
     }
+
+    // MODAL
 
     function fecharModal(){
 
@@ -697,9 +1058,7 @@
 
     }
 
-    // =========================
     // PESQUISA
-    // =========================
 
     document.getElementById("pesquisa")
       .addEventListener("input",function(){
@@ -710,29 +1069,27 @@
       const filtrados =
         produtos.filter(produto=>{
 
-        return(
+          return(
 
-          produto.nome
-            .toLowerCase()
-            .includes(valor)
+            produto.nome
+              .toLowerCase()
+              .includes(valor)
 
-          ||
+            ||
 
-          produto.id
-            .toString()
-            .includes(valor)
+            produto.id
+              .toString()
+              .includes(valor)
 
-        );
+          );
 
-      });
+        });
 
       renderizarTabela(filtrados);
 
     });
 
-    // =========================
-    // ENTER
-    // =========================
+    // ENTER LOGIN
 
     document.getElementById("senha")
       .addEventListener("keypress",function(e){
@@ -745,9 +1102,7 @@
 
     });
 
-    // =========================
     // INICIAR
-    // =========================
 
     renderizarTabela(produtos);
 
