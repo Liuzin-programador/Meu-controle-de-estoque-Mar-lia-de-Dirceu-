@@ -4,9 +4,15 @@
 <head>
 
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Controle de Estoque • Marília de Dirceu</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Controle de Estoque • Marília de Dirceu
+  </title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -23,6 +29,7 @@
     }
 
     body{
+
       background:
       linear-gradient(
         135deg,
@@ -37,11 +44,16 @@
       sans-serif;
 
       overflow-x:hidden;
+
     }
 
     .glass{
-      backdrop-filter:blur(12px);
-      background:rgba(255,255,255,.78);
+
+      backdrop-filter:blur(10px);
+
+      background:
+      rgba(255,255,255,.80);
+
     }
 
     .fade{
@@ -63,17 +75,20 @@
     }
 
     .scroll-custom::-webkit-scrollbar{
-      width:8px;
-      height:8px;
+      width:7px;
+      height:7px;
     }
 
     .scroll-custom::-webkit-scrollbar-thumb{
+
       background:#7e22ce;
+
       border-radius:999px;
+
     }
 
     table{
-      min-width:1500px;
+      min-width:1400px;
     }
 
     .status-ok{
@@ -81,8 +96,11 @@
     }
 
     .status-buy{
+
       background:#dc2626;
+
       animation:pulse 1.5s infinite;
+
     }
 
     @keyframes pulse{
@@ -92,7 +110,7 @@
       }
 
       50%{
-        transform:scale(1.05);
+        transform:scale(1.04);
       }
 
       100%{
@@ -241,38 +259,47 @@
 
     <!-- HEADER -->
 
-    <header class="glass sticky top-0 z-40 shadow-2xl">
+    <header class="
+      glass
+      sticky
+      top-0
+      z-40
+      shadow-xl
+      border-b
+      border-purple-100
+    ">
 
-      <div class="max-w-7xl mx-auto p-5">
+      <div class="max-w-7xl mx-auto px-3 py-3">
 
         <div class="
           flex
-          flex-col
-          xl:flex-row
-          gap-5
           items-center
           justify-between
+          gap-3
+          flex-nowrap
         ">
 
           <!-- ESQUERDA -->
 
           <div class="
             flex
-            flex-col
-            sm:flex-row
             items-center
-            gap-5
+            gap-3
+            min-w-0
           ">
 
+            <!-- LOGO -->
+
             <div class="
-              w-24
-              h-24
+              w-16
+              h-16
               rounded-full
               overflow-hidden
-              border-4
+              border-2
               border-purple-700
-              shadow-2xl
               bg-white
+              shadow-lg
+              flex-shrink-0
             ">
 
               <img
@@ -282,20 +309,29 @@
 
             </div>
 
-            <div class="text-center sm:text-left">
+            <!-- TÍTULO -->
+
+            <div class="min-w-0">
 
               <h1 class="
-                text-3xl
-                md:text-4xl
+                text-lg
+                md:text-2xl
                 font-black
                 text-purple-700
+                leading-tight
+                truncate
               ">
 
                 Controle de Estoque
 
               </h1>
 
-              <p class="text-gray-500 text-lg">
+              <p class="
+                text-gray-500
+                text-xs
+                md:text-sm
+                truncate
+              ">
 
                 Marília de Dirceu
 
@@ -309,30 +345,33 @@
 
           <div class="
             flex
-            flex-col
-            md:flex-row
-            gap-3
-            w-full
-            xl:w-auto
+            items-center
+            gap-2
+            flex-shrink-0
           ">
+
+            <!-- PESQUISA -->
 
             <input
               type="text"
               id="pesquisa"
-              placeholder="Pesquisar produto..."
+              placeholder="Pesquisar..."
               class="
-                w-full
-                md:w-80
+                w-32
+                md:w-52
                 border-2
                 border-purple-300
-                rounded-2xl
-                px-5
-                py-4
+                rounded-xl
+                px-3
+                py-2
+                text-sm
                 outline-none
                 focus:border-purple-700
-                shadow-md
+                shadow-sm
               "
             >
+
+            <!-- BOTÃO -->
 
             <button
               onclick="salvarDados()"
@@ -341,15 +380,18 @@
                 hover:bg-green-700
                 transition
                 text-white
-                px-8
-                py-4
-                rounded-2xl
+                px-4
+                py-2
+                rounded-xl
+                text-xs
+                md:text-sm
                 font-black
-                shadow-xl
+                shadow-lg
+                whitespace-nowrap
               "
             >
 
-              SALVAR ALTERAÇÕES
+              SALVAR
 
             </button>
 
@@ -363,7 +405,7 @@
 
     <!-- MAIN -->
 
-    <main class="max-w-7xl mx-auto p-5">
+    <main class="max-w-7xl mx-auto p-4">
 
       <!-- CARDS -->
 
@@ -371,24 +413,25 @@
         grid
         grid-cols-1
         md:grid-cols-3
-        gap-5
-        mb-6
+        gap-4
+        mb-5
       ">
+
+        <!-- CARD 1 -->
 
         <div class="
           bg-white
           rounded-3xl
-          shadow-2xl
-          p-6
+          shadow-xl
+          p-5
         ">
 
           <h2 class="
-            text-lg
             text-gray-500
             font-bold
           ">
 
-            Total de Produtos
+            Total Produtos
 
           </h2>
 
@@ -408,20 +451,21 @@
 
         </div>
 
+        <!-- CARD 2 -->
+
         <div class="
           bg-white
           rounded-3xl
-          shadow-2xl
-          p-6
+          shadow-xl
+          p-5
         ">
 
           <h2 class="
-            text-lg
             text-gray-500
             font-bold
           ">
 
-            Estoque Total Atual
+            Estoque Atual
 
           </h2>
 
@@ -441,15 +485,16 @@
 
         </div>
 
+        <!-- CARD 3 -->
+
         <div class="
           bg-white
           rounded-3xl
-          shadow-2xl
-          p-6
+          shadow-xl
+          p-5
         ">
 
           <h2 class="
-            text-lg
             text-gray-500
             font-bold
           ">
@@ -495,7 +540,6 @@
                 bg-purple-700
                 text-white
                 text-sm
-                md:text-base
               ">
 
                 <th class="p-5 text-left">
@@ -507,19 +551,19 @@
                 </th>
 
                 <th class="p-5 text-center">
-                  Entrada Hoje
+                  Entrada
                 </th>
 
                 <th class="p-5 text-center">
-                  Saída Hoje
+                  Saída
                 </th>
 
                 <th class="p-5 text-center">
-                  Estoque Atual
+                  Estoque
                 </th>
 
                 <th class="p-5 text-center">
-                  Estoque Mínimo
+                  Mínimo
                 </th>
 
                 <th class="p-5 text-center">
@@ -542,17 +586,32 @@
 
     <!-- FOOTER -->
 
-    <footer class="bg-purple-900 text-white mt-10">
+    <footer class="
+      bg-purple-900
+      text-white
+      mt-10
+    ">
 
-      <div class="max-w-7xl mx-auto p-6 text-center">
+      <div class="
+        max-w-7xl
+        mx-auto
+        p-6
+        text-center
+      ">
 
-        <h2 class="text-2xl font-black">
+        <h2 class="
+          text-2xl
+          font-black
+        ">
 
           Desenvolvido por Eliezer Rodrigues
 
         </h2>
 
-        <p class="text-purple-200 mt-2">
+        <p class="
+          text-purple-200
+          mt-2
+        ">
 
           Sistema Profissional de Controle de Estoque • 2026
 
@@ -752,6 +811,7 @@
           (parseFloat(produto.saidaHoje) || 0);
 
         produto.entradaHoje = "";
+
         produto.saidaHoje = "";
 
       });
@@ -778,6 +838,7 @@
       tabela.innerHTML = "";
 
       let estoqueTotal = 0;
+
       let produtosBaixos = 0;
 
       lista.forEach((produto,index)=>{
@@ -804,7 +865,9 @@
           estoqueFinal < produto.estoqueMinimo;
 
         if(estoqueBaixo){
+
           produtosBaixos++;
+
         }
 
         tabela.innerHTML += `
@@ -847,7 +910,7 @@
                 onchange="editarEntrada(${index}, this.value)"
                 placeholder="0"
                 class="
-                  w-32
+                  w-28
                   border
                   rounded-2xl
                   px-4
@@ -866,7 +929,7 @@
                 onchange="editarSaida(${index}, this.value)"
                 placeholder="0"
                 class="
-                  w-32
+                  w-28
                   border
                   rounded-2xl
                   px-4
@@ -896,7 +959,7 @@
                 value="${produto.estoqueMinimo}"
                 onchange="editarMinimo(${index}, this.value)"
                 class="
-                  w-28
+                  w-24
                   border-2
                   border-purple-300
                   rounded-2xl
@@ -920,7 +983,7 @@
                 <span class="
                   status-buy
                   text-white
-                  px-6
+                  px-5
                   py-3
                   rounded-full
                   font-black
@@ -938,7 +1001,7 @@
                 <span class="
                   status-ok
                   text-white
-                  px-6
+                  px-5
                   py-3
                   rounded-full
                   font-black
@@ -959,7 +1022,7 @@
 
       });
 
-      // CARDS SUPERIORES
+      // CARDS
 
       document.getElementById("totalProdutos")
         .innerHTML = produtos.length;
@@ -1022,6 +1085,7 @@
           (parseFloat(produto.saidaHoje) || 0);
 
         produto.entradaHoje = "";
+
         produto.saidaHoje = "";
 
       });
