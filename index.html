@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Controle de Estoque</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body{
+      background: #f3f4f6;
+    }
+
+    .scroll-tabela::-webkit-scrollbar{
+      height: 8px;
+      width: 8px;
+    }
+
+    .scroll-tabela::-webkit-scrollbar-thumb{
+      background: #9333ea;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen p-6">
+
+  <div class="max-w-7xl mx-auto">
+
+    <!-- TOPO -->
+    <div class="bg-white rounded-3xl shadow-xl p-6 mb-6">
+
+      <div class="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+
+        <div>
+          <h1 class="text-3xl font-bold text-purple-700">
+            Controle de Estoque
+          </h1>
+
+          <p class="text-gray-500 mt-1">
+            Entrada e saída de produtos
+          </p>
+        </div>
+
+        <!-- PESQUISA -->
+        <div class="w-full lg:w-96">
+          <input
+            type="text"
+            id="pesquisa"
+            placeholder="Pesquisar por nome ou número..."
+            class="w-full border-2 border-purple-300 focus:border-purple-600 outline-none rounded-xl px-4 py-3"
+          />
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TABELA -->
+    <div class="bg-white rounded-3xl shadow-xl p-4 overflow-hidden">
+
+      <div class="overflow-auto scroll-tabela">
+
+        <table class="w-full min-w-[1000px]">
+
+          <thead>
+            <tr class="bg-purple-700 text-white">
+
+              <th class="p-3 text-left">N°</th>
+              <th class="p-3 text-left">Produto</th>
+              <th class="p-3 text-center">Chegada</th>
+              <th class="p-3 text-center">Retirada</th>
+              <th class="p-3 text-center">Quantidade Atual</th>
+              <th class="p-3 text-center">Status</th>
+
+            </tr>
+          </thead>
+
+          <tbody id="tabelaProdutos">
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    const tabela = document.getElementById("tabelaProdutos");
+
+    // GERAR 70 PRODUTOS
+    let produtos = [];
+
+    for(let i = 1; i <= 70; i++){
+
+      produtos.push({
+        id: i,
+        nome: "Produto " + i,
+        chegada: 0,
+        retirada: 0
+      });
+
+    }
+
+    function renderizarTabela(lista){
+
+      tabela.innerHTML = "";
+
+      lista.forEach((produto, index) => {
+
+        const quantidade = produto.chegada - produto.retirada;
+
+        const estoqueBaixo = quantidade < 8;
+
+        tabela.innerHTML += `
+
+          <tr class="
+            border-b
+            ${estoqueBaixo ? 'bg-red-100' : 'bg-white'}
+            hover:bg-gray-100
+            transition
+          ">
+
+            <td class="p-3 font-semibold">
+              ${produto.id}
+            </td>
+
+            <td class="p-3">
+              <input
+                type="text"
+                value="${produto.nome}"
+                onchange="editarNome(${index}, this.value)"
+                class="w-full border rounded-lg px-3 py-2"
+              />
+            </td>
+
+            <td class="p-3 text-center">
+              <input
+                type="number"
+                min="0"
+                value="${produto.chegada}"
+                onchange="editarChegada(${index}, this.value)"
+                class="w-24 border rounded-lg px-3 py-2 text-center"
+              />
+            </td>
+
+            <td class="p-3 text-center">
+              <input
+                type="number"
+                min="0"
+                value="${produto.retirada}"
+                onchange="editarRetirada(${index}, this.value)"
+                class="w-24 border rounded-lg px-3 py-2 text-center"
+              />
+            </td>
+
+            <td class="
+              p-3
+              text-center
+              font-bold
+              ${estoqueBaixo ? 'text-red-700' : 'text-green-700'}
+            ">
+              ${quantidade}
+            </td>
+
+            <td class="p-3 text-center">
+
+              ${
+                estoqueBaixo
+                ?
+                `<span class="bg-red-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                  COMPRAR
+                </span>`
+                :
+                `<span class="bg-green-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                  OK
+                </span>`
+              }
+
+            </td>
+
+          </tr>
+
+        `;
+
+      });
+
+    }
+
+    // EDITAR NOME
+    function editarNome(index, valor){
+      produtos[index].nome = valor;
+    }
+
+    // EDITAR CHEGADA
+    function editarChegada(index, valor){
+      produtos[index].chegada = Number(valor);
+      renderizarTabela(produtos);
+    }
+
+    // EDITAR RETIRADA
+    function editarRetirada(index, valor){
+      produtos[index].retirada = Number(valor);
+      renderizarTabela(produtos);
+    }
+
+    // PESQUISA
+    document.getElementById("pesquisa").addEventListener("input", function(){
+
+      const valor = this.value.toLowerCase();
+
+      const filtrados = produtos.filter(produto => {
+
+        return (
+          produto.nome.toLowerCase().includes(valor) ||
+          produto.id.toString().includes(valor)
+        );
+
+      });
+
+      renderizarTabela(filtrados);
+
+    });
+
+    // INICIAR
+    renderizarTabela(produtos);
+
+  </script>
+
+</body>
+</html>
