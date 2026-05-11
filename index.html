@@ -5,16 +5,24 @@
 
   <meta charset="UTF-8" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
 
   <title>
     Controle de Estoque • Marília de Dirceu
   </title>
 
+  <!-- TAILWIND -->
+
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ICONS -->
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- EXCEL -->
+
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
   <style>
 
@@ -30,14 +38,6 @@
 
     body{
 
-      background:
-      linear-gradient(
-        135deg,
-        #f5f3ff,
-        #ede9fe,
-        #faf5ff
-      );
-
       font-family:
       Arial,
       Helvetica,
@@ -45,14 +45,24 @@
 
       overflow-x:hidden;
 
+      background:
+      linear-gradient(
+        135deg,
+        #f3e8ff,
+        #faf5ff,
+        #ede9fe
+      );
+
+      min-height:100vh;
+
     }
 
     .glass{
 
-      backdrop-filter:blur(10px);
+      backdrop-filter:blur(12px);
 
       background:
-      rgba(255,255,255,.80);
+      rgba(255,255,255,.75);
 
     }
 
@@ -74,9 +84,29 @@
 
     }
 
+    .pulse{
+      animation:pulse 1.5s infinite;
+    }
+
+    @keyframes pulse{
+
+      0%{
+        transform:scale(1);
+      }
+
+      50%{
+        transform:scale(1.03);
+      }
+
+      100%{
+        transform:scale(1);
+      }
+
+    }
+
     .scroll-custom::-webkit-scrollbar{
-      width:7px;
-      height:7px;
+      width:8px;
+      height:8px;
     }
 
     .scroll-custom::-webkit-scrollbar-thumb{
@@ -91,615 +121,554 @@
       min-width:1400px;
     }
 
-    .status-ok{
+    tr:nth-child(even){
+      background:#fafafa;
+    }
+
+    .toast{
+
+      position:fixed;
+      top:20px;
+      right:20px;
+
       background:#16a34a;
+
+      color:#fff;
+
+      padding:18px 25px;
+
+      border-radius:18px;
+
+      font-weight:700;
+
+      z-index:999;
+
+      box-shadow:0 15px 40px rgba(0,0,0,.15);
+
+      opacity:0;
+
+      transform:translateY(-20px);
+
+      transition:.3s;
+
     }
 
-    .status-buy{
+    .toast.show{
 
-      background:#dc2626;
+      opacity:1;
 
-      animation:pulse 1.5s infinite;
+      transform:translateY(0);
 
     }
 
-    @keyframes pulse{
+    .dark-mode{
 
-      0%{
-        transform:scale(1);
-      }
+      background:#0f172a !important;
 
-      50%{
-        transform:scale(1.04);
-      }
+      color:white;
 
-      100%{
-        transform:scale(1);
-      }
+    }
 
+    .dark-mode .bg-white{
+      background:#1e293b !important;
+      color:white !important;
+    }
+
+    .dark-mode input{
+      background:#0f172a !important;
+      color:white !important;
+      border-color:#334155 !important;
     }
 
   </style>
 
 </head>
 
-<body class="min-h-screen">
+<body>
 
-  <!-- LOGIN -->
+<!-- TOAST -->
 
-  <div
-    id="loginTela"
-    class="
-      fixed
-      inset-0
-      bg-black/80
-      flex
-      items-center
-      justify-center
-      z-50
-      p-4
-    "
-  >
+<div id="toast" class="toast">
 
-    <div class="
-      bg-white
-      rounded-3xl
-      shadow-2xl
-      p-8
-      w-full
-      max-w-md
-      fade
-    ">
+  Alterações salvas com sucesso
 
-      <!-- LOGO -->
+</div>
 
-      <div class="flex justify-center mb-6">
+<!-- LOGIN -->
 
-        <div class="
-          w-32
-          h-32
-          rounded-full
-          border-4
-          border-purple-700
-          overflow-hidden
-          shadow-2xl
-          bg-white
-        ">
+<div
+  id="loginTela"
+  class="
+    fixed
+    inset-0
+    bg-black/80
+    flex
+    items-center
+    justify-center
+    z-50
+    p-4
+  "
+>
 
-          <img
-            src="imagens (76).jpeg"
-            class="w-full h-full object-cover"
-          >
+  <div class="
+    bg-white
+    rounded-3xl
+    shadow-2xl
+    p-8
+    w-full
+    max-w-md
+    fade
+  ">
 
-        </div>
+    <!-- LOGO -->
 
-      </div>
+    <div class="flex justify-center">
 
-      <h1 class="
-        text-4xl
-        font-black
-        text-center
-        text-purple-700
+      <div class="
+        w-32
+        h-32
+        rounded-full
+        overflow-hidden
+        border-4
+        border-purple-700
+        shadow-2xl
       ">
 
-        Controle de Estoque
-
-      </h1>
-
-      <p class="
-        text-center
-        text-gray-500
-        text-lg
-        mt-2
-      ">
-
-        Marília de Dirceu
-
-      </p>
-
-      <div class="mt-8">
-
-        <input
-          type="password"
-          id="senha"
-          placeholder="Digite sua senha"
-          class="
-            w-full
-            border-2
-            border-purple-300
-            rounded-2xl
-            px-5
-            py-4
-            outline-none
-            focus:border-purple-700
-          "
+        <img
+          src="imagens (76).jpeg"
+          class="w-full h-full object-cover"
         >
-
-        <button
-          onclick="verificarSenha()"
-          class="
-            w-full
-            mt-4
-            bg-purple-700
-            hover:bg-purple-800
-            transition
-            text-white
-            py-4
-            rounded-2xl
-            font-black
-            text-lg
-            shadow-xl
-          "
-        >
-
-          Entrar no Sistema
-
-        </button>
-
-        <p
-          id="erroSenha"
-          class="
-            hidden
-            text-red-600
-            text-center
-            font-bold
-            mt-4
-          "
-        ></p>
 
       </div>
 
     </div>
 
-  </div>
-
-  <!-- SISTEMA -->
-
-  <div id="sistema" class="hidden">
-
-    <!-- HEADER -->
-
-    <header class="
-      glass
-      sticky
-      top-0
-      z-40
-      shadow-xl
-      border-b
-      border-purple-100
+    <h1 class="
+      text-4xl
+      font-black
+      text-center
+      text-purple-700
+      mt-6
     ">
 
-      <div class="max-w-7xl mx-auto px-3 py-3">
+      Controle de Estoque
+
+    </h1>
+
+    <p class="
+      text-center
+      text-gray-500
+      mt-2
+    ">
+
+      Marília de Dirceu
+
+    </p>
+
+    <!-- SENHA -->
+
+    <div class="mt-8 relative">
+
+      <input
+        type="password"
+        id="senha"
+        placeholder="Digite sua senha"
+        class="
+          w-full
+          border-2
+          border-purple-300
+          rounded-2xl
+          px-5
+          py-4
+          outline-none
+          focus:border-purple-700
+        "
+      >
+
+      <button
+        onclick="mostrarSenha()"
+        class="
+          absolute
+          right-4
+          top-4
+          text-purple-700
+        "
+      >
+
+        👁️
+
+      </button>
+
+    </div>
+
+    <button
+      onclick="verificarSenha()"
+      class="
+        w-full
+        mt-5
+        bg-purple-700
+        hover:bg-purple-800
+        transition
+        text-white
+        py-4
+        rounded-2xl
+        font-black
+        shadow-xl
+      "
+    >
+
+      ENTRAR
+
+    </button>
+
+    <p
+      id="erroSenha"
+      class="
+        hidden
+        text-center
+        text-red-600
+        font-bold
+        mt-4
+      "
+    ></p>
+
+  </div>
+
+</div>
+
+<!-- SISTEMA -->
+
+<div id="sistema" class="hidden">
+
+  <!-- HEADER -->
+
+  <header class="
+    glass
+    sticky
+    top-0
+    z-40
+    border-b
+    border-purple-100
+    shadow-xl
+  ">
+
+    <div class="max-w-7xl mx-auto px-4 py-3">
+
+      <div class="
+        flex
+        flex-wrap
+        gap-4
+        items-center
+        justify-between
+      ">
+
+        <!-- LEFT -->
+
+        <div class="flex items-center gap-4">
+
+          <div class="
+            w-16
+            h-16
+            rounded-full
+            overflow-hidden
+            border-2
+            border-purple-700
+            shadow-xl
+          ">
+
+            <img
+              src="imagens (76).jpeg"
+              class="w-full h-full object-cover"
+            >
+
+          </div>
+
+          <div>
+
+            <h1 class="
+              text-2xl
+              font-black
+              text-purple-700
+            ">
+
+              Controle de Estoque
+
+            </h1>
+
+            <p class="text-gray-500">
+
+              Marília de Dirceu
+
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT -->
 
         <div class="
           flex
+          flex-wrap
+          gap-2
           items-center
-          justify-between
-          gap-3
-          flex-nowrap
         ">
 
-          <!-- ESQUERDA -->
+          <!-- RELÓGIO -->
 
-          <div class="
-            flex
-            items-center
-            gap-3
-            min-w-0
-          ">
-
-            <!-- LOGO -->
-
-            <div class="
-              w-16
-              h-16
-              rounded-full
-              overflow-hidden
-              border-2
-              border-purple-700
+          <div
+            id="relogio"
+            class="
               bg-white
+              px-4
+              py-2
+              rounded-2xl
               shadow-lg
-              flex-shrink-0
-            ">
+              font-bold
+            "
+          ></div>
 
-              <img
-                src="imagens (76).jpeg"
-                class="w-full h-full object-cover"
-              >
+          <!-- PESQUISA -->
 
-            </div>
+          <input
+            type="text"
+            id="pesquisa"
+            placeholder="Pesquisar..."
+            class="
+              border-2
+              border-purple-300
+              rounded-2xl
+              px-4
+              py-3
+              outline-none
+              focus:border-purple-700
+            "
+          >
 
-            <!-- TÍTULO -->
+          <!-- BOTÕES -->
 
-            <div class="min-w-0">
+          <button
+            onclick="salvarDados()"
+            class="
+              bg-green-600
+              hover:bg-green-700
+              text-white
+              px-5
+              py-3
+              rounded-2xl
+              font-black
+              shadow-xl
+            "
+          >
 
-              <h1 class="
-                text-lg
-                md:text-2xl
-                font-black
-                text-purple-700
-                leading-tight
-                truncate
-              ">
+            SALVAR
 
-                Controle de Estoque
+          </button>
 
-              </h1>
+          <button
+            onclick="exportarExcel()"
+            class="
+              bg-blue-600
+              hover:bg-blue-700
+              text-white
+              px-5
+              py-3
+              rounded-2xl
+              font-black
+              shadow-xl
+            "
+          >
 
-              <p class="
-                text-gray-500
-                text-xs
-                md:text-sm
-                truncate
-              ">
+            EXCEL
 
-                Marília de Dirceu
+          </button>
 
-              </p>
+          <button
+            onclick="toggleDarkMode()"
+            class="
+              bg-black
+              hover:bg-gray-800
+              text-white
+              px-5
+              py-3
+              rounded-2xl
+              font-black
+              shadow-xl
+            "
+          >
 
-            </div>
+            🌙
 
-          </div>
-
-          <!-- DIREITA -->
-
-          <div class="
-            flex
-            items-center
-            gap-2
-            flex-shrink-0
-          ">
-
-            <!-- PESQUISA -->
-
-            <input
-              type="text"
-              id="pesquisa"
-              placeholder="Pesquisar..."
-              class="
-                w-32
-                md:w-52
-                border-2
-                border-purple-300
-                rounded-xl
-                px-3
-                py-2
-                text-sm
-                outline-none
-                focus:border-purple-700
-                shadow-sm
-              "
-            >
-
-            <!-- BOTÃO -->
-
-            <button
-              onclick="salvarDados()"
-              class="
-                bg-green-600
-                hover:bg-green-700
-                transition
-                text-white
-                px-4
-                py-2
-                rounded-xl
-                text-xs
-                md:text-sm
-                font-black
-                shadow-lg
-                whitespace-nowrap
-              "
-            >
-
-              SALVAR
-
-            </button>
-
-          </div>
+          </button>
 
         </div>
 
       </div>
 
-    </header>
+    </div>
 
-    <!-- MAIN -->
+  </header>
 
-    <main class="max-w-7xl mx-auto p-4">
+  <!-- MAIN -->
 
-      <!-- CARDS -->
+  <main class="max-w-7xl mx-auto p-4">
 
-      <div class="
-        grid
-        grid-cols-1
-        md:grid-cols-3
-        gap-4
-        mb-5
-      ">
+    <!-- CARDS -->
 
-        <!-- CARD 1 -->
+    <div class="
+      grid
+      grid-cols-1
+      md:grid-cols-3
+      gap-5
+      mb-5
+    ">
 
-        <div class="
-          bg-white
-          rounded-3xl
-          shadow-xl
-          p-5
-        ">
-
-          <h2 class="
-            text-gray-500
-            font-bold
-          ">
-
-            Total Produtos
-
-          </h2>
-
-          <p
-            id="totalProdutos"
-            class="
-              text-5xl
-              font-black
-              text-purple-700
-              mt-3
-            "
-          >
-
-            0
-
-          </p>
-
-        </div>
-
-        <!-- CARD 2 -->
-
-        <div class="
-          bg-white
-          rounded-3xl
-          shadow-xl
-          p-5
-        ">
-
-          <h2 class="
-            text-gray-500
-            font-bold
-          ">
-
-            Estoque Atual
-
-          </h2>
-
-          <p
-            id="estoqueTotal"
-            class="
-              text-5xl
-              font-black
-              text-green-700
-              mt-3
-            "
-          >
-
-            0
-
-          </p>
-
-        </div>
-
-        <!-- CARD 3 -->
-
-        <div class="
-          bg-white
-          rounded-3xl
-          shadow-xl
-          p-5
-        ">
-
-          <h2 class="
-            text-gray-500
-            font-bold
-          ">
-
-            Produtos Baixos
-
-          </h2>
-
-          <p
-            id="produtosBaixos"
-            class="
-              text-5xl
-              font-black
-              text-red-700
-              mt-3
-            "
-          >
-
-            0
-
-          </p>
-
-        </div>
-
-      </div>
-
-      <!-- TABELA -->
+      <!-- CARD -->
 
       <div class="
         bg-white
         rounded-3xl
         shadow-2xl
-        overflow-hidden
+        p-6
       ">
 
-        <div class="overflow-x-auto scroll-custom">
+        <div class="flex justify-between items-center">
 
-          <table class="w-full">
+          <div>
 
-            <thead>
+            <p class="text-gray-500 font-bold">
 
-              <tr class="
-                bg-purple-700
-                text-white
-                text-sm
-              ">
+              Total Produtos
 
-                <th class="p-5 text-left">
-                  N°
-                </th>
+            </p>
 
-                <th class="p-5 text-left">
-                  Produto
-                </th>
+            <h2
+              id="totalProdutos"
+              class="
+                text-5xl
+                font-black
+                text-purple-700
+                mt-3
+              "
+            >
 
-                <th class="p-5 text-center">
-                  Entrada
-                </th>
+              0
 
-                <th class="p-5 text-center">
-                  Saída
-                </th>
+            </h2>
 
-                <th class="p-5 text-center">
-                  Estoque
-                </th>
+          </div>
 
-                <th class="p-5 text-center">
-                  Mínimo
-                </th>
-
-                <th class="p-5 text-center">
-                  Status
-                </th>
-
-              </tr>
-
-            </thead>
-
-            <tbody id="tabelaProdutos"></tbody>
-
-          </table>
+          <i
+            data-lucide="boxes"
+            class="w-12 h-12 text-purple-700"
+          ></i>
 
         </div>
 
       </div>
 
-    </main>
-
-    <!-- FOOTER -->
-
-    <footer class="
-      bg-purple-900
-      text-white
-      mt-10
-    ">
+      <!-- CARD -->
 
       <div class="
-        max-w-7xl
-        mx-auto
+        bg-white
+        rounded-3xl
+        shadow-2xl
         p-6
-        text-center
       ">
 
-        <h2 class="
-          text-2xl
-          font-black
-        ">
+        <div class="flex justify-between items-center">
 
-          Desenvolvido por Eliezer Rodrigues
+          <div>
 
-        </h2>
+            <p class="text-gray-500 font-bold">
 
-        <p class="
-          text-purple-200
-          mt-2
-        ">
+              Estoque Atual
 
-          Sistema Profissional de Controle de Estoque • 2026
+            </p>
 
-        </p>
+            <h2
+              id="estoqueTotal"
+              class="
+                text-5xl
+                font-black
+                text-green-700
+                mt-3
+              "
+            >
 
-      </div>
+              0
 
-    </footer>
+            </h2>
 
-  </div>
+          </div>
 
-  <!-- MODAL -->
-
-  <div
-    id="modalSalvar"
-    class="
-      hidden
-      fixed
-      inset-0
-      bg-black/70
-      z-50
-      items-center
-      justify-center
-      p-4
-    "
-  >
-
-    <div class="
-      bg-white
-      rounded-3xl
-      shadow-2xl
-      p-8
-      w-full
-      max-w-md
-      fade
-    ">
-
-      <div class="flex justify-center">
-
-        <div class="
-          w-24
-          h-24
-          rounded-full
-          bg-green-100
-          flex
-          items-center
-          justify-center
-        ">
-
-          <span class="text-5xl">
-            ✅
-          </span>
+          <i
+            data-lucide="warehouse"
+            class="w-12 h-12 text-green-700"
+          ></i>
 
         </div>
 
       </div>
 
-      <h2 class="
-        text-3xl
-        font-black
-        text-center
-        text-green-700
-        mt-5
+      <!-- CARD -->
+
+      <div class="
+        bg-white
+        rounded-3xl
+        shadow-2xl
+        p-6
       ">
 
-        Alterações Salvas
+        <div class="flex justify-between items-center">
 
-      </h2>
+          <div>
 
-      <p class="
-        text-center
-        text-gray-500
-        mt-3
-      ">
+            <p class="text-gray-500 font-bold">
 
-        Todas as alterações foram salvas com sucesso.
+              Produtos Baixos
 
-      </p>
+            </p>
+
+            <h2
+              id="produtosBaixos"
+              class="
+                text-5xl
+                font-black
+                text-red-700
+                mt-3
+              "
+            >
+
+              0
+
+            </h2>
+
+          </div>
+
+          <i
+            data-lucide="triangle-alert"
+            class="w-12 h-12 text-red-700"
+          ></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- BOTÃO -->
+
+    <div class="mb-5">
 
       <button
-        onclick="fecharModal()"
+        onclick="adicionarProduto()"
         class="
-          w-full
-          mt-8
-          bg-green-600
-          hover:bg-green-700
+          bg-purple-700
+          hover:bg-purple-800
           transition
           text-white
+          px-6
           py-4
           rounded-2xl
           font-black
@@ -707,425 +676,455 @@
         "
       >
 
-        FECHAR
+        + ADICIONAR PRODUTO
 
       </button>
 
     </div>
 
-  </div>
+    <!-- TABELA -->
 
-  <script>
+    <div class="
+      bg-white
+      rounded-3xl
+      shadow-2xl
+      overflow-hidden
+    ">
 
-    // LOGIN
+      <div class="overflow-x-auto scroll-custom">
 
-    function verificarSenha(){
+        <table class="w-full">
 
-      const senha =
-        document.getElementById("senha").value;
+          <thead>
 
-      if(senha === "007"){
-
-        document.getElementById("loginTela")
-          .style.display = "none";
-
-        document.getElementById("sistema")
-          .classList.remove("hidden");
-
-      }else{
-
-        const erro =
-          document.getElementById("erroSenha");
-
-        erro.innerHTML =
-        "Desculpe, só o Eliezer pode acessar. Caso seja você, tente novamente!";
-
-        erro.classList.remove("hidden");
-
-      }
-
-    }
-
-    // DATA
-
-    const hoje =
-      new Date().toLocaleDateString("pt-BR");
-
-    const ultimaData =
-      localStorage.getItem("ultimaAtualizacao");
-
-    // PRODUTOS
-
-    let produtos =
-      JSON.parse(
-        localStorage.getItem("estoqueProdutos")
-      );
-
-    // PRIMEIRA VEZ
-
-    if(!produtos){
-
-      produtos = [];
-
-      for(let i = 1; i <= 70; i++){
-
-        produtos.push({
-
-          id:i,
-
-          nome:"Produto " + i,
-
-          entradaHoje:"",
-
-          saidaHoje:"",
-
-          estoqueAtual:0,
-
-          estoqueMinimo:10
-
-        });
-
-      }
-
-      localStorage.setItem(
-        "estoqueProdutos",
-        JSON.stringify(produtos)
-      );
-
-    }
-
-    // NOVO DIA
-
-    if(ultimaData !== hoje){
-
-      produtos.forEach(produto=>{
-
-        produto.estoqueAtual =
-
-          produto.estoqueAtual +
-
-          (parseFloat(produto.entradaHoje) || 0)
-
-          -
-
-          (parseFloat(produto.saidaHoje) || 0);
-
-        produto.entradaHoje = "";
-
-        produto.saidaHoje = "";
-
-      });
-
-      localStorage.setItem(
-        "ultimaAtualizacao",
-        hoje
-      );
-
-      localStorage.setItem(
-        "estoqueProdutos",
-        JSON.stringify(produtos)
-      );
-
-    }
-
-    const tabela =
-      document.getElementById("tabelaProdutos");
-
-    // RENDERIZAR
-
-    function renderizarTabela(lista){
-
-      tabela.innerHTML = "";
-
-      let estoqueTotal = 0;
-
-      let produtosBaixos = 0;
-
-      lista.forEach((produto,index)=>{
-
-        const entradaHoje =
-          parseFloat(produto.entradaHoje) || 0;
-
-        const saidaHoje =
-          parseFloat(produto.saidaHoje) || 0;
-
-        // ESTOQUE EM TEMPO REAL
-
-        const estoqueFinal =
-
-          produto.estoqueAtual +
-
-          entradaHoje -
-
-          saidaHoje;
-
-        estoqueTotal += estoqueFinal;
-
-        const estoqueBaixo =
-          estoqueFinal < produto.estoqueMinimo;
-
-        if(estoqueBaixo){
-
-          produtosBaixos++;
-
-        }
-
-        tabela.innerHTML += `
-
-          <tr class="
-            border-b
-            hover:bg-gray-50
-            transition
-            ${estoqueBaixo ? 'bg-red-50' : ''}
-          ">
-
-            <td class="p-4 font-black">
-
-              ${produto.id}
-
-            </td>
-
-            <td class="p-4">
-
-              <input
-                type="text"
-                value="${produto.nome}"
-                onchange="editarNome(${index}, this.value)"
-                class="
-                  w-full
-                  border
-                  rounded-2xl
-                  px-4
-                  py-3
-                "
-              >
-
-            </td>
-
-            <td class="p-4 text-center">
-
-              <input
-                type="number"
-                value="${produto.entradaHoje}"
-                onchange="editarEntrada(${index}, this.value)"
-                placeholder="0"
-                class="
-                  w-28
-                  border
-                  rounded-2xl
-                  px-4
-                  py-3
-                  text-center
-                "
-              >
-
-            </td>
-
-            <td class="p-4 text-center">
-
-              <input
-                type="number"
-                value="${produto.saidaHoje}"
-                onchange="editarSaida(${index}, this.value)"
-                placeholder="0"
-                class="
-                  w-28
-                  border
-                  rounded-2xl
-                  px-4
-                  py-3
-                  text-center
-                "
-              >
-
-            </td>
-
-            <td class="
-              p-4
-              text-center
-              font-black
-              text-2xl
-              ${estoqueBaixo ? 'text-red-700' : 'text-green-700'}
+            <tr class="
+              bg-purple-700
+              text-white
+              text-sm
             ">
 
-              ${estoqueFinal}
+              <th class="p-5 text-left">N°</th>
+              <th class="p-5 text-left">Produto</th>
+              <th class="p-5 text-center">Entrada</th>
+              <th class="p-5 text-center">Saída</th>
+              <th class="p-5 text-center">Estoque</th>
+              <th class="p-5 text-center">Mínimo</th>
+              <th class="p-5 text-center">Status</th>
 
-            </td>
+            </tr>
 
-            <td class="p-4 text-center">
+          </thead>
 
-              <input
-                type="number"
-                value="${produto.estoqueMinimo}"
-                onchange="editarMinimo(${index}, this.value)"
-                class="
-                  w-24
-                  border-2
-                  border-purple-300
-                  rounded-2xl
-                  px-4
-                  py-3
-                  text-center
-                  font-black
-                "
-              >
+          <tbody id="tabelaProdutos"></tbody>
 
-            </td>
+        </table>
 
-            <td class="p-4 text-center">
+      </div>
 
-              ${
-                estoqueBaixo
+    </div>
 
-                ?
+  </main>
 
-                `
-                <span class="
-                  status-buy
-                  text-white
-                  px-5
-                  py-3
-                  rounded-full
-                  font-black
-                  shadow-xl
-                ">
+</div>
 
-                  COMPRAR
+<script>
 
-                </span>
-                `
+  lucide.createIcons();
 
-                :
+  // LOGIN
 
-                `
-                <span class="
-                  status-ok
-                  text-white
-                  px-5
-                  py-3
-                  rounded-full
-                  font-black
-                  shadow-xl
-                ">
+  let tentativas = 0;
 
-                  OK
+  if(localStorage.getItem("logado") === "sim"){
 
-                </span>
-                `
-              }
+    document.getElementById("loginTela")
+      .style.display = "none";
 
-            </td>
+    document.getElementById("sistema")
+      .classList.remove("hidden");
 
-          </tr>
+  }
 
-        `;
+  function mostrarSenha(){
 
-      });
+    const input =
+      document.getElementById("senha");
 
-      // CARDS
+    input.type =
+      input.type === "password"
+      ? "text"
+      : "password";
 
-      document.getElementById("totalProdutos")
-        .innerHTML = produtos.length;
+  }
 
-      document.getElementById("estoqueTotal")
-        .innerHTML = estoqueTotal;
+  function verificarSenha(){
 
-      document.getElementById("produtosBaixos")
-        .innerHTML = produtosBaixos;
+    const senha =
+      document.getElementById("senha").value;
 
-    }
+    if(senha === "007"){
 
-    // EDITAR
+      localStorage.setItem("logado","sim");
 
-    function editarNome(index,valor){
+      document.getElementById("loginTela")
+        .style.display = "none";
 
-      produtos[index].nome = valor;
-
-    }
-
-    function editarEntrada(index,valor){
-
-      produtos[index].entradaHoje = valor;
-
-      renderizarTabela(produtos);
-
-    }
-
-    function editarSaida(index,valor){
-
-      produtos[index].saidaHoje = valor;
-
-      renderizarTabela(produtos);
-
-    }
-
-    function editarMinimo(index,valor){
-
-      produtos[index].estoqueMinimo =
-        parseFloat(valor) || 0;
-
-      renderizarTabela(produtos);
-
-    }
-
-    // SALVAR
-
-    function salvarDados(){
-
-      produtos.forEach(produto=>{
-
-        produto.estoqueAtual =
-
-          produto.estoqueAtual +
-
-          (parseFloat(produto.entradaHoje) || 0)
-
-          -
-
-          (parseFloat(produto.saidaHoje) || 0);
-
-        produto.entradaHoje = "";
-
-        produto.saidaHoje = "";
-
-      });
-
-      localStorage.setItem(
-        "estoqueProdutos",
-        JSON.stringify(produtos)
-      );
-
-      localStorage.setItem(
-        "ultimaAtualizacao",
-        hoje
-      );
-
-      renderizarTabela(produtos);
-
-      document.getElementById("modalSalvar")
+      document.getElementById("sistema")
         .classList.remove("hidden");
 
-      document.getElementById("modalSalvar")
-        .classList.add("flex");
+    }else{
+
+      tentativas++;
+
+      const erro =
+        document.getElementById("erroSenha");
+
+      erro.classList.remove("hidden");
+
+      erro.innerHTML =
+      "Senha incorreta.";
+
+      if(tentativas >= 3){
+
+        erro.innerHTML =
+        "Sistema bloqueado temporariamente.";
+
+      }
 
     }
 
-    // MODAL
+  }
 
-    function fecharModal(){
+  // RELÓGIO
 
-      document.getElementById("modalSalvar")
-        .classList.add("hidden");
+  setInterval(()=>{
 
-      document.getElementById("modalSalvar")
-        .classList.remove("flex");
+    const agora = new Date();
+
+    document.getElementById("relogio")
+      .innerHTML =
+      agora.toLocaleString("pt-BR");
+
+  },1000);
+
+  // PRODUTOS
+
+  let produtos =
+    JSON.parse(
+      localStorage.getItem("estoqueProdutos")
+    );
+
+  if(!produtos){
+
+    produtos = [];
+
+    for(let i = 1; i <= 70; i++){
+
+      produtos.push({
+
+        id:i,
+        nome:"Produto " + i,
+        entradaHoje:"",
+        saidaHoje:"",
+        estoqueAtual:0,
+        estoqueMinimo:10
+
+      });
 
     }
 
-    // PESQUISA
+  }
 
-    document.getElementById("pesquisa")
-      .addEventListener("input",function(){
+  const tabela =
+    document.getElementById("tabelaProdutos");
+
+  // RENDER
+
+  function renderizarTabela(lista){
+
+    tabela.innerHTML = "";
+
+    let estoqueTotal = 0;
+
+    let baixos = 0;
+
+    lista.forEach((produto,index)=>{
+
+      const entrada =
+        parseFloat(produto.entradaHoje) || 0;
+
+      const saida =
+        parseFloat(produto.saidaHoje) || 0;
+
+      const estoqueFinal =
+        produto.estoqueAtual +
+        entrada -
+        saida;
+
+      estoqueTotal += estoqueFinal;
+
+      const baixo =
+        estoqueFinal <= produto.estoqueMinimo;
+
+      if(baixo){
+        baixos++;
+      }
+
+      tabela.innerHTML += `
+
+        <tr class="
+          border-b
+          hover:bg-purple-50
+          transition
+          ${baixo ? 'bg-red-50' : ''}
+        ">
+
+          <td class="p-4 font-black">
+
+            ${produto.id}
+
+          </td>
+
+          <td class="p-4">
+
+            <input
+              type="text"
+              value="${produto.nome}"
+              onchange="editarNome(${index},this.value)"
+              class="
+                w-full
+                border
+                rounded-2xl
+                px-4
+                py-3
+              "
+            >
+
+          </td>
+
+          <td class="p-4 text-center">
+
+            <input
+              type="number"
+              min="0"
+              value="${produto.entradaHoje}"
+              onchange="editarEntrada(${index},this.value)"
+              class="
+                w-28
+                border
+                rounded-2xl
+                px-4
+                py-3
+                text-center
+              "
+            >
+
+          </td>
+
+          <td class="p-4 text-center">
+
+            <input
+              type="number"
+              min="0"
+              value="${produto.saidaHoje}"
+              onchange="editarSaida(${index},this.value)"
+              class="
+                w-28
+                border
+                rounded-2xl
+                px-4
+                py-3
+                text-center
+              "
+            >
+
+          </td>
+
+          <td class="
+            p-4
+            text-center
+            font-black
+            text-2xl
+            ${baixo ? 'text-red-700' : 'text-green-700'}
+          ">
+
+            ${estoqueFinal}
+
+          </td>
+
+          <td class="p-4 text-center">
+
+            <input
+              type="number"
+              min="0"
+              value="${produto.estoqueMinimo}"
+              onchange="editarMinimo(${index},this.value)"
+              class="
+                w-24
+                border-2
+                border-purple-300
+                rounded-2xl
+                px-4
+                py-3
+                text-center
+                font-black
+              "
+            >
+
+          </td>
+
+          <td class="p-4 text-center">
+
+            ${
+              baixo
+              ?
+              `
+              <span class="
+                bg-red-600
+                pulse
+                text-white
+                px-5
+                py-3
+                rounded-full
+                font-black
+                shadow-xl
+              ">
+                REPOSIÇÃO
+              </span>
+              `
+              :
+              `
+              <span class="
+                bg-green-600
+                text-white
+                px-5
+                py-3
+                rounded-full
+                font-black
+                shadow-xl
+              ">
+                DISPONÍVEL
+              </span>
+              `
+            }
+
+          </td>
+
+        </tr>
+
+      `;
+
+    });
+
+    document.getElementById("totalProdutos")
+      .innerHTML = produtos.length;
+
+    document.getElementById("estoqueTotal")
+      .innerHTML = estoqueTotal;
+
+    document.getElementById("produtosBaixos")
+      .innerHTML = baixos;
+
+  }
+
+  // EDITAR
+
+  function editarNome(index,valor){
+
+    produtos[index].nome = valor;
+
+  }
+
+  function editarEntrada(index,valor){
+
+    produtos[index].entradaHoje = valor;
+
+    renderizarTabela(produtos);
+
+  }
+
+  function editarSaida(index,valor){
+
+    produtos[index].saidaHoje = valor;
+
+    renderizarTabela(produtos);
+
+  }
+
+  function editarMinimo(index,valor){
+
+    produtos[index].estoqueMinimo =
+      parseFloat(valor) || 0;
+
+    renderizarTabela(produtos);
+
+  }
+
+  // SALVAR
+
+  function salvarDados(){
+
+    produtos.forEach(produto=>{
+
+      produto.estoqueAtual =
+
+        produto.estoqueAtual +
+
+        (parseFloat(produto.entradaHoje) || 0)
+
+        -
+
+        (parseFloat(produto.saidaHoje) || 0);
+
+      produto.entradaHoje = "";
+
+      produto.saidaHoje = "";
+
+    });
+
+    localStorage.setItem(
+      "estoqueProdutos",
+      JSON.stringify(produtos)
+    );
+
+    renderizarTabela(produtos);
+
+    mostrarToast();
+
+  }
+
+  // AUTO SAVE
+
+  setInterval(()=>{
+
+    localStorage.setItem(
+      "estoqueProdutos",
+      JSON.stringify(produtos)
+    );
+
+  },3000);
+
+  // TOAST
+
+  function mostrarToast(){
+
+    const toast =
+      document.getElementById("toast");
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+      toast.classList.remove("show");
+
+    },3000);
+
+  }
+
+  // PESQUISA
+
+  document.getElementById("pesquisa")
+    .addEventListener("input",function(){
 
       const valor =
         this.value.toLowerCase();
@@ -1153,10 +1152,63 @@
 
     });
 
-    // ENTER LOGIN
+  // ADD PRODUTO
 
-    document.getElementById("senha")
-      .addEventListener("keypress",function(e){
+  function adicionarProduto(){
+
+    produtos.push({
+
+      id:produtos.length + 1,
+      nome:"",
+      entradaHoje:"",
+      saidaHoje:"",
+      estoqueAtual:0,
+      estoqueMinimo:10
+
+    });
+
+    renderizarTabela(produtos);
+
+    mostrarToast();
+
+  }
+
+  // EXCEL
+
+  function exportarExcel(){
+
+    const ws =
+      XLSX.utils.json_to_sheet(produtos);
+
+    const wb =
+      XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+      wb,
+      ws,
+      "Estoque"
+    );
+
+    XLSX.writeFile(
+      wb,
+      "controle_estoque.xlsx"
+    );
+
+  }
+
+  // DARK MODE
+
+  function toggleDarkMode(){
+
+    document.body.classList
+      .toggle("dark-mode");
+
+  }
+
+  // ENTER LOGIN
+
+  document.getElementById("senha")
+    .addEventListener("keypress",function(e){
 
       if(e.key === "Enter"){
 
@@ -1166,12 +1218,12 @@
 
     });
 
-    // INICIAR
+  // INICIAR
 
-    renderizarTabela(produtos);
+  renderizarTabela(produtos);
 
-  </script>
+</script>
 
 </body>
 
-</html>
+              </html>
