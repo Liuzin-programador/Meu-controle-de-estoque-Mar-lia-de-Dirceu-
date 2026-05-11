@@ -12,15 +12,9 @@
     Controle de Estoque • Marília de Dirceu
   </title>
 
-  <!-- TAILWIND -->
-
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- ICONS -->
-
   <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- EXCEL -->
 
   <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
@@ -37,12 +31,7 @@
     }
 
     body{
-
-      font-family:
-      Arial,
-      Helvetica,
-      sans-serif;
-
+      font-family:Arial, Helvetica, sans-serif;
       overflow-x:hidden;
 
       background:
@@ -54,18 +43,12 @@
       );
 
       min-height:100vh;
-
       transition:.3s;
-
     }
 
     .glass{
-
       backdrop-filter:blur(12px);
-
-      background:
-      rgba(255,255,255,.75);
-
+      background:rgba(255,255,255,.75);
     }
 
     .fade{
@@ -112,11 +95,8 @@
     }
 
     .scroll-custom::-webkit-scrollbar-thumb{
-
       background:#7e22ce;
-
       border-radius:999px;
-
     }
 
     table{
@@ -128,45 +108,29 @@
     }
 
     .toast{
-
       position:fixed;
       top:20px;
       right:20px;
-
       background:#16a34a;
-
       color:#fff;
-
       padding:18px 25px;
-
       border-radius:18px;
-
       font-weight:700;
-
       z-index:999;
-
       box-shadow:0 15px 40px rgba(0,0,0,.15);
-
       opacity:0;
-
       transform:translateY(-20px);
-
       transition:.3s;
-
     }
 
     .toast.show{
-
       opacity:1;
-
       transform:translateY(0);
-
     }
 
-    /* DARK MODE AJUSTADO */
+    /* DARK MODE COMPLETO */
 
     .dark-mode{
-
       background:
       linear-gradient(
         135deg,
@@ -176,20 +140,19 @@
       ) !important;
 
       color:white !important;
+    }
 
+    .dark-mode *{
+      color:white;
     }
 
     .dark-mode .glass{
-
-      background:
-      rgba(15,23,42,.9) !important;
-
+      background:rgba(15,23,42,.95) !important;
       border-color:#334155 !important;
-
     }
 
     .dark-mode .bg-white{
-      background:#1e293b !important;
+      background:#111827 !important;
       color:white !important;
     }
 
@@ -199,12 +162,25 @@
       border-color:#475569 !important;
     }
 
-    .dark-mode table tr:nth-child(even){
+    .dark-mode table{
+      background:#111827 !important;
+    }
+
+    .dark-mode tr{
+      background:#111827 !important;
+    }
+
+    .dark-mode tr:nth-child(even){
       background:#172033 !important;
     }
 
-    .dark-mode table tr:hover{
+    .dark-mode tr:hover{
       background:#243047 !important;
+    }
+
+    .dark-mode td{
+      background:transparent !important;
+      color:white !important;
     }
 
     .dark-mode p{
@@ -215,8 +191,17 @@
       color:white !important;
     }
 
-    .dark-mode td{
-      color:white !important;
+    .dark-mode .text-gray-500{
+      color:#cbd5e1 !important;
+    }
+
+    .card-click{
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    .card-click:hover{
+      transform:translateY(-3px);
     }
 
   </style>
@@ -225,12 +210,8 @@
 
 <body>
 
-<!-- TOAST -->
-
 <div id="toast" class="toast">
-
   Alterações salvas com sucesso
-
 </div>
 
 <!-- LOGIN -->
@@ -258,8 +239,6 @@
     max-w-md
     fade
   ">
-
-    <!-- LOGO -->
 
     <div class="flex justify-center">
 
@@ -303,8 +282,6 @@
       Marília de Dirceu
 
     </p>
-
-    <!-- SENHA -->
 
     <div class="mt-8 relative">
 
@@ -379,8 +356,6 @@
 
 <div id="sistema" class="hidden">
 
-  <!-- HEADER -->
-
   <header class="
     glass
     sticky
@@ -400,8 +375,6 @@
         items-center
         justify-between
       ">
-
-        <!-- LEFT -->
 
         <div class="flex items-center gap-4">
 
@@ -444,16 +417,12 @@
 
         </div>
 
-        <!-- RIGHT -->
-
         <div class="
           flex
           flex-wrap
           gap-2
           items-center
         ">
-
-          <!-- RELÓGIO -->
 
           <div
             id="relogio"
@@ -466,8 +435,6 @@
               font-bold
             "
           ></div>
-
-          <!-- PESQUISA -->
 
           <input
             type="text"
@@ -483,8 +450,6 @@
               focus:border-purple-700
             "
           >
-
-          <!-- BOTÕES -->
 
           <button
             onclick="salvarDados()"
@@ -548,8 +513,6 @@
 
   </header>
 
-  <!-- MAIN -->
-
   <main class="max-w-7xl mx-auto p-4">
 
     <!-- CARDS -->
@@ -561,8 +524,6 @@
       gap-5
       mb-5
     ">
-
-      <!-- CARD -->
 
       <div class="
         bg-white
@@ -576,9 +537,7 @@
           <div>
 
             <p class="text-gray-500 font-bold">
-
               Total Produtos
-
             </p>
 
             <h2
@@ -590,9 +549,7 @@
                 mt-3
               "
             >
-
               0
-
             </h2>
 
           </div>
@@ -606,8 +563,6 @@
 
       </div>
 
-      <!-- CARD -->
-
       <div class="
         bg-white
         rounded-3xl
@@ -620,9 +575,7 @@
           <div>
 
             <p class="text-gray-500 font-bold">
-
               Estoque Atual
-
             </p>
 
             <h2
@@ -634,9 +587,7 @@
                 mt-3
               "
             >
-
               0
-
             </h2>
 
           </div>
@@ -650,23 +601,25 @@
 
       </div>
 
-      <!-- CARD -->
+      <!-- CARD BAIXOS -->
 
-      <div class="
-        bg-white
-        rounded-3xl
-        shadow-2xl
-        p-6
-      ">
+      <div
+        onclick="mostrarBaixos()"
+        class="
+          bg-white
+          rounded-3xl
+          shadow-2xl
+          p-6
+          card-click
+        "
+      >
 
         <div class="flex justify-between items-center">
 
           <div>
 
             <p class="text-gray-500 font-bold">
-
               Produtos Baixos
-
             </p>
 
             <h2
@@ -678,9 +631,7 @@
                 mt-3
               "
             >
-
               0
-
             </h2>
 
           </div>
@@ -696,9 +647,7 @@
 
     </div>
 
-    <!-- BOTÃO -->
-
-    <div class="mb-5">
+    <div class="mb-5 flex gap-3 flex-wrap">
 
       <button
         onclick="adicionarProduto()"
@@ -716,6 +665,25 @@
       >
 
         + ADICIONAR PRODUTO
+
+      </button>
+
+      <button
+        onclick="renderizarTabela(produtos)"
+        class="
+          bg-gray-800
+          hover:bg-black
+          transition
+          text-white
+          px-6
+          py-4
+          rounded-2xl
+          font-black
+          shadow-xl
+        "
+      >
+
+        MOSTRAR TODOS
 
       </button>
 
@@ -905,15 +873,12 @@
 
         <tr class="
           border-b
-          hover:bg-purple-50
           transition
           ${baixo ? 'bg-red-50' : ''}
         ">
 
           <td class="p-4 font-black">
-
             ${produto.id}
-
           </td>
 
           <td class="p-4">
@@ -921,7 +886,7 @@
             <input
               type="text"
               value="${produto.nome}"
-              onchange="editarNome(${index},this.value)"
+              onchange="editarNome(${produto.id},this.value)"
               class="
                 w-full
                 border
@@ -939,7 +904,7 @@
               type="number"
               min="0"
               value="${produto.entradaHoje}"
-              onchange="editarEntrada(${index},this.value)"
+              onchange="editarEntrada(${produto.id},this.value)"
               class="
                 w-28
                 border
@@ -958,7 +923,7 @@
               type="number"
               min="0"
               value="${produto.saidaHoje}"
-              onchange="editarSaida(${index},this.value)"
+              onchange="editarSaida(${produto.id},this.value)"
               class="
                 w-28
                 border
@@ -989,7 +954,7 @@
               type="number"
               min="0"
               value="${produto.estoqueMinimo}"
-              onchange="editarMinimo(${index},this.value)"
+              onchange="editarMinimo(${produto.id},this.value)"
               class="
                 w-24
                 border-2
@@ -1047,6 +1012,8 @@
 
     });
 
+    /* CORREÇÃO TOTAL PRODUTOS */
+
     document.getElementById("totalProdutos")
       .innerHTML = produtos.length;
 
@@ -1054,35 +1021,58 @@
       .innerHTML = estoqueTotal;
 
     document.getElementById("produtosBaixos")
-      .innerHTML = baixos;
+      .innerHTML = produtos.filter(produto=>{
+
+        const entrada =
+          parseFloat(produto.entradaHoje) || 0;
+
+        const saida =
+          parseFloat(produto.saidaHoje) || 0;
+
+        const estoque =
+          produto.estoqueAtual +
+          entrada -
+          saida;
+
+        return estoque <= produto.estoqueMinimo;
+
+      }).length;
 
   }
 
-  function editarNome(index,valor){
+  function encontrarProduto(id){
 
-    produtos[index].nome = valor;
+    return produtos.find(
+      produto => produto.id === id
+    );
 
   }
 
-  function editarEntrada(index,valor){
+  function editarNome(id,valor){
 
-    produtos[index].entradaHoje = valor;
+    encontrarProduto(id).nome = valor;
+
+  }
+
+  function editarEntrada(id,valor){
+
+    encontrarProduto(id).entradaHoje = valor;
 
     renderizarTabela(produtos);
 
   }
 
-  function editarSaida(index,valor){
+  function editarSaida(id,valor){
 
-    produtos[index].saidaHoje = valor;
+    encontrarProduto(id).saidaHoje = valor;
 
     renderizarTabela(produtos);
 
   }
 
-  function editarMinimo(index,valor){
+  function editarMinimo(id,valor){
 
-    produtos[index].estoqueMinimo =
+    encontrarProduto(id).estoqueMinimo =
       parseFloat(valor) || 0;
 
     renderizarTabela(produtos);
@@ -1192,7 +1182,31 @@
 
   }
 
-  /* EXCEL PROFISSIONAL */
+  /* MOSTRAR SOMENTE BAIXOS */
+
+  function mostrarBaixos(){
+
+    const baixos =
+      produtos.filter(produto=>{
+
+        const entrada =
+          parseFloat(produto.entradaHoje) || 0;
+
+        const saida =
+          parseFloat(produto.saidaHoje) || 0;
+
+        const estoque =
+          produto.estoqueAtual +
+          entrada -
+          saida;
+
+        return estoque <= produto.estoqueMinimo;
+
+      });
+
+    renderizarTabela(baixos);
+
+  }
 
   function exportarExcel(){
 
@@ -1252,87 +1266,6 @@
 
     ];
 
-    const range =
-      XLSX.utils.decode_range(ws["!ref"]);
-
-    for(let C = range.s.c; C <= range.e.c; ++C){
-
-      const cell =
-        XLSX.utils.encode_cell({r:3,c:C});
-
-      if(!ws[cell]) continue;
-
-      ws[cell].s = {
-
-        font:{
-          bold:true,
-          color:{rgb:"FFFFFF"},
-          sz:14
-        },
-
-        fill:{
-          fgColor:{rgb:"6D28D9"}
-        },
-
-        alignment:{
-          horizontal:"center",
-          vertical:"center"
-        },
-
-        border:{
-          top:{style:"thin"},
-          bottom:{style:"thin"},
-          left:{style:"thin"},
-          right:{style:"thin"}
-        }
-
-      };
-
-    }
-
-    for(let R = 4; R <= range.e.r; ++R){
-
-      for(let C = 0; C <= range.e.c; ++C){
-
-        const cell =
-          XLSX.utils.encode_cell({r:R,c:C});
-
-        if(!ws[cell]) continue;
-
-        ws[cell].s = {
-
-          alignment:{
-            horizontal:"center",
-            vertical:"center"
-          },
-
-          border:{
-            top:{style:"thin"},
-            bottom:{style:"thin"},
-            left:{style:"thin"},
-            right:{style:"thin"}
-          }
-
-        };
-
-      }
-
-    }
-
-    ws["A1"].s = {
-
-      font:{
-        bold:true,
-        sz:20,
-        color:{rgb:"6D28D9"}
-      },
-
-      alignment:{
-        horizontal:"center"
-      }
-
-    };
-
     ws["!merges"] = [
       {
         s:{r:0,c:0},
@@ -1367,9 +1300,7 @@
     .addEventListener("keypress",function(e){
 
       if(e.key === "Enter"){
-
         verificarSenha();
-
       }
 
     });
