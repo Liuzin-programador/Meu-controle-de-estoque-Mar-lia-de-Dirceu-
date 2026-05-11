@@ -55,6 +55,8 @@
 
       min-height:100vh;
 
+      transition:.3s;
+
     }
 
     .glass{
@@ -161,11 +163,28 @@
 
     }
 
+    /* DARK MODE AJUSTADO */
+
     .dark-mode{
 
-      background:#0f172a !important;
+      background:
+      linear-gradient(
+        135deg,
+        #020617,
+        #0f172a,
+        #111827
+      ) !important;
 
-      color:white;
+      color:white !important;
+
+    }
+
+    .dark-mode .glass{
+
+      background:
+      rgba(15,23,42,.9) !important;
+
+      border-color:#334155 !important;
 
     }
 
@@ -177,7 +196,27 @@
     .dark-mode input{
       background:#0f172a !important;
       color:white !important;
-      border-color:#334155 !important;
+      border-color:#475569 !important;
+    }
+
+    .dark-mode table tr:nth-child(even){
+      background:#172033 !important;
+    }
+
+    .dark-mode table tr:hover{
+      background:#243047 !important;
+    }
+
+    .dark-mode p{
+      color:#cbd5e1 !important;
+    }
+
+    .dark-mode th{
+      color:white !important;
+    }
+
+    .dark-mode td{
+      color:white !important;
     }
 
   </style>
@@ -731,8 +770,6 @@
 
   lucide.createIcons();
 
-  // LOGIN
-
   let tentativas = 0;
 
   if(localStorage.getItem("logado") === "sim"){
@@ -795,8 +832,6 @@
 
   }
 
-  // RELÓGIO
-
   setInterval(()=>{
 
     const agora = new Date();
@@ -806,8 +841,6 @@
       agora.toLocaleString("pt-BR");
 
   },1000);
-
-  // PRODUTOS
 
   let produtos =
     JSON.parse(
@@ -837,8 +870,6 @@
 
   const tabela =
     document.getElementById("tabelaProdutos");
-
-  // RENDER
 
   function renderizarTabela(lista){
 
@@ -1027,8 +1058,6 @@
 
   }
 
-  // EDITAR
-
   function editarNome(index,valor){
 
     produtos[index].nome = valor;
@@ -1059,8 +1088,6 @@
     renderizarTabela(produtos);
 
   }
-
-  // SALVAR
 
   function salvarDados(){
 
@@ -1093,8 +1120,6 @@
 
   }
 
-  // AUTO SAVE
-
   setInterval(()=>{
 
     localStorage.setItem(
@@ -1103,8 +1128,6 @@
     );
 
   },3000);
-
-  // TOAST
 
   function mostrarToast(){
 
@@ -1120,8 +1143,6 @@
     },3000);
 
   }
-
-  // PESQUISA
 
   document.getElementById("pesquisa")
     .addEventListener("input",function(){
@@ -1152,8 +1173,6 @@
 
     });
 
-  // ADD PRODUTO
-
   function adicionarProduto(){
 
     produtos.push({
@@ -1173,12 +1192,153 @@
 
   }
 
-  // EXCEL
+  /* EXCEL PROFISSIONAL */
 
   function exportarExcel(){
 
+    const dados = produtos.map(produto=>{
+
+      const entrada =
+        parseFloat(produto.entradaHoje) || 0;
+
+      const saida =
+        parseFloat(produto.saidaHoje) || 0;
+
+      const estoque =
+        produto.estoqueAtual +
+        entrada -
+        saida;
+
+      return {
+
+        "N°": produto.id,
+        "Produto": produto.nome,
+        "Entrada": entrada,
+        "Saída": saida,
+        "Estoque Atual": estoque,
+        "Estoque Mínimo": produto.estoqueMinimo,
+        "Status":
+          estoque <= produto.estoqueMinimo
+          ? "REPOSIÇÃO"
+          : "DISPONÍVEL"
+
+      };
+
+    });
+
     const ws =
-      XLSX.utils.json_to_sheet(produtos);
+      XLSX.utils.json_to_sheet(
+        dados,
+        {origin:"A4"}
+      );
+
+    XLSX.utils.sheet_add_aoa(
+      ws,
+      [[
+        "CONTROLE DE ESTOQUE • MARÍLIA DE DIRCEU"
+      ]],
+      {origin:"A1"}
+    );
+
+    ws["!cols"] = [
+
+      {wch:8},
+      {wch:35},
+      {wch:15},
+      {wch:15},
+      {wch:20},
+      {wch:20},
+      {wch:20}
+
+    ];
+
+    const range =
+      XLSX.utils.decode_range(ws["!ref"]);
+
+    for(let C = range.s.c; C <= range.e.c; ++C){
+
+      const cell =
+        XLSX.utils.encode_cell({r:3,c:C});
+
+      if(!ws[cell]) continue;
+
+      ws[cell].s = {
+
+        font:{
+          bold:true,
+          color:{rgb:"FFFFFF"},
+          sz:14
+        },
+
+        fill:{
+          fgColor:{rgb:"6D28D9"}
+        },
+
+        alignment:{
+          horizontal:"center",
+          vertical:"center"
+        },
+
+        border:{
+          top:{style:"thin"},
+          bottom:{style:"thin"},
+          left:{style:"thin"},
+          right:{style:"thin"}
+        }
+
+      };
+
+    }
+
+    for(let R = 4; R <= range.e.r; ++R){
+
+      for(let C = 0; C <= range.e.c; ++C){
+
+        const cell =
+          XLSX.utils.encode_cell({r:R,c:C});
+
+        if(!ws[cell]) continue;
+
+        ws[cell].s = {
+
+          alignment:{
+            horizontal:"center",
+            vertical:"center"
+          },
+
+          border:{
+            top:{style:"thin"},
+            bottom:{style:"thin"},
+            left:{style:"thin"},
+            right:{style:"thin"}
+          }
+
+        };
+
+      }
+
+    }
+
+    ws["A1"].s = {
+
+      font:{
+        bold:true,
+        sz:20,
+        color:{rgb:"6D28D9"}
+      },
+
+      alignment:{
+        horizontal:"center"
+      }
+
+    };
+
+    ws["!merges"] = [
+      {
+        s:{r:0,c:0},
+        e:{r:0,c:6}
+      }
+    ];
 
     const wb =
       XLSX.utils.book_new();
@@ -1191,12 +1351,10 @@
 
     XLSX.writeFile(
       wb,
-      "controle_estoque.xlsx"
+      "Controle_Estoque_Marilia.xlsx"
     );
 
   }
-
-  // DARK MODE
 
   function toggleDarkMode(){
 
@@ -1204,8 +1362,6 @@
       .toggle("dark-mode");
 
   }
-
-  // ENTER LOGIN
 
   document.getElementById("senha")
     .addEventListener("keypress",function(e){
@@ -1218,12 +1374,10 @@
 
     });
 
-  // INICIAR
-
   renderizarTabela(produtos);
 
 </script>
 
 </body>
 
-              </html>
+</html>
